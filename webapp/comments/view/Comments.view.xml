@@ -1,0 +1,23 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View controllerName="cross.fnd.fiori.inbox.comments.view.Comments"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<FeedInput id="commentsFeedInput" post="publishEventForCommentsAdded" visible="{detail>/TaskSupports/AddComments}" maxLength="10000" showIcon="true" placeholder="{i18n>view.CreateComment.placeholder}"/>
+	<List id="MIBCommentList" inset="false" showSeparators="Inner" items="{path: 'detail>/Comments/results', sorter: [{path:'CreatedAt', descending: true}]}">
+		<items>
+			<FeedListItem 
+				text="{detail>Text}" 
+				senderPress="publishEventForBusinessCard" 
+				sender="{path: 'detail>CreatedByName'}" 
+				timestamp="{path: 'detail>CreatedAt', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'medium'}}" 
+				icon="{parts: [{path: 'detail>SAP__Origin'}, {path: 'detail>CreatedBy'}], formatter: 'cross.fnd.fiori.inbox.comments.formatterUserIcon'}"  
+				iconPress="publishEventForBusinessCard"
+			>
+			</FeedListItem>
+		</items>
+	</List>
+</core:View>

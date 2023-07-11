@@ -1,0 +1,119 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Dialog id="DLG_SUPPORTINFO" title="{i18n>supportinfo.navigation_button}"
+		contentWidth="50%" contentHeight="75%">
+		<content>
+			<Panel headerText="{i18n>supportinfo.section_application_information}" expandable="true"
+				expanded="true">
+				<f:SimpleForm id="SF_APP_INFO" editable="false"
+					maxContainerCols="2" layout="ResponsiveGridLayout" labelSpanL="3"
+					labelSpanM="3">
+					<f:content>
+						<Label text="{supportInfo>/technicalVersion}" />
+						<Text text="{/compversion}" />
+						<Label text="{supportInfo>/UI5Version}" />
+						<Text text="{/sapui5version}" />
+						<Label text="{supportInfo>/taskProcessingVersion}" />
+						<Text text="{supportInfo>/taskProcessingVersionValue}" />
+						<Label text="{supportInfo>/filterCriteria}" visible="{parts: [{path:'/filters'}],  formatter:'cross.fnd.fiori.inbox.util.SupportInfo.formatVisibility'}" />
+						<Text text="{/filters}" visible="{parts: [{path:'/filters'}],  formatter:'cross.fnd.fiori.inbox.util.SupportInfo.formatVisibility'}"/>
+						<Label text="{supportInfo>/sortCriteria}" visible="{parts: [{path:'/orderby'}],  formatter:'cross.fnd.fiori.inbox.util.SupportInfo.formatVisibility'}"/>
+						<Text text="{/orderby}" visible="{parts: [{path:'/orderby'}],  formatter:'cross.fnd.fiori.inbox.util.SupportInfo.formatVisibility'}"/>
+						<Label text="{supportInfo>/searchCriteria}" visible="{parts: [{path:'/searchby'}],  formatter:'cross.fnd.fiori.inbox.util.SupportInfo.formatVisibility'}"/>
+						<Text text="{/searchby}" visible="{parts: [{path:'/searchby'}],  formatter:'cross.fnd.fiori.inbox.util.SupportInfo.formatVisibility'}"/>
+						<Label text="{supportInfo>/groupCriteria}" visible="{parts: [{path:'/groupby'}],  formatter:'cross.fnd.fiori.inbox.util.SupportInfo.formatVisibility'}"/>
+						<Text text="{/groupby}" visible="{parts: [{path:'/groupby'}],  formatter:'cross.fnd.fiori.inbox.util.SupportInfo.formatVisibility'}"/>
+					</f:content>
+				</f:SimpleForm>
+			</Panel>
+			<Panel headerText="{i18n>supportinfo.section_scenario_information}" expandable="true"
+				expanded="true">
+				<f:SimpleForm id="SF_SCENARIO_INFO" editable="false"
+					maxContainerCols="2" layout="ResponsiveGridLayout" labelSpanL="3"
+					labelSpanM="3">
+					<f:content>
+						<Label text="{supportInfo>/uniqueName}" />
+						<Text text="{/ScenarioConfig/UniqueName}" />
+						<Label text="{supportInfo>/displayName}" />
+						<Text text="{/ScenarioConfig/DisplayName}" />
+						<Label text="{supportInfo>/totalItems}" />
+						<Text text="{/ScenarioConfig/TotalItems}" />
+						<Label text="{supportInfo>/isMassActionEnabled}" />
+						<Text text="{/ScenarioConfig/IsMassActionEnabled}" />
+						<Label text="{supportInfo>/isQuickActionEnabled}" />
+						<Text text="{/ScenarioConfig/IsQuickActionEnabled}" />
+						<Label text="{supportInfo>/sortBy}" />
+						<Text text="{/ScenarioConfig/SortBy}" />
+						</f:content>
+				</f:SimpleForm>
+			</Panel>
+			<Panel headerText="{i18n>supportinfo.section_task_information}" expandable="true"
+				expanded="true">
+				<f:SimpleForm id="SF_TASK_INFO" editable="false"
+					maxContainerCols="2" layout="ResponsiveGridLayout" labelSpanL="3"
+					labelSpanM="3">
+					<f:content>
+						<Label text="{supportInfo>/SAP__Origin}" />
+						<Text text="{/Task/SAP__Origin}" />
+						<Label text="{supportInfo>/instanceID}" />
+						<Text text="{path:'/Task/InstanceID', formatter:'cross.fnd.fiori.inbox.util.SupportInfo.decodeString'}" />
+						<Label text="{supportInfo>/taskDefinitionID}" />
+						<Text text="{path:'/Task/TaskDefinitionID', formatter:'cross.fnd.fiori.inbox.util.SupportInfo.decodeString'}" />
+						<Label text="{supportInfo>/taskDefinitionName}" />
+						<Text text="{path:'/Task/TaskDefinitionName', formatter:'cross.fnd.fiori.inbox.util.SupportInfo.decodeString'}" />
+						<Label text="{supportInfo>/createdOn}"/>
+						<Text text="{/Task/CreatedOn}" />
+						<Label text="{supportInfo>/createdBy}"/>
+						<Text text="{/Task/CreatedBy}" />
+						<Label text="{supportInfo>/createdByName}"/>
+						<Text text="{/Task/CreatedByName}" />
+						<Label text="{supportInfo>/substitutedUser}"/>
+						<Text text="{/Task/SubstitutedUser}" />
+						<Label text="{supportInfo>/substitutedUserName}"/>
+						<Text text="{/Task/SubstitutedUserName}" />
+						<Label text="{supportInfo>/startDeadLine}"/>
+						<Text text="{/Task/StartDeadLine}" />
+						<Label text="{supportInfo>/completionDeadLine}"/>
+						<Text text="{/Task/CompletionDeadLine}" />
+						<Label text="{supportInfo>/expiryDate}"/>
+						<Text text="{/Task/ExpiryDate}" />
+						<Label text="{supportInfo>/forwardingUser}"/>
+						<Text text="{/Task/ForwardingUser}" />
+						<Label text="{supportInfo>/forwardingUserName}"/>
+						<Text text="{/Task/ForwardingUserName}" />
+						<Label text="{supportInfo>/customAttributes}"/>
+						<Table id="idCustomAttributes" items="{path:'/Task/CustomAttributeData'}">
+							<columns>
+							<Column>
+								<Text text="{supportInfo>/name}" />
+							</Column>
+							<Column>
+								<Text text="{supportInfo>/type}" />
+							</Column>
+							<Column>
+								<Text text="{supportInfo>/value}" />
+							</Column>
+							</columns>
+							<items>
+							<ColumnListItem>
+							<cells>
+								<Text text="{Name}"></Text>
+								<Text text="{Type}"></Text>
+								<Text text="{Value}"></Text>
+							</cells>
+							</ColumnListItem>
+							</items>
+						</Table>
+					</f:content>
+				</f:SimpleForm>
+			</Panel>
+		</content>
+		<endButton>
+			<Button press="onCancelDialog" text="{i18n>XBUT_CANCEL}" />
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

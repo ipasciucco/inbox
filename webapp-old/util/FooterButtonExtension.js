@@ -1,0 +1,4 @@
+/*
+ * Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+ */
+sap.ui.define(["cross/fnd/fiori/inbox/util/tools/ButtonListHelper","sap/m/library"],function(B,l){"use strict";var a=l.ButtonType;cross.fnd.fiori.inbox.util.FooterButtonExtension=(function(){return{overrideEnsureButton:function(){if(!cross.fnd.fiori.inbox.util.tools.ButtonListHelper.prototype.originalEnsureButton){cross.fnd.fiori.inbox.util.tools.ButtonListHelper.prototype.originalEnsureButton=cross.fnd.fiori.inbox.util.tools.ButtonListHelper.prototype.ensureButton;cross.fnd.fiori.inbox.util.tools.ButtonListHelper.prototype.ensureButton=function(b,t,m){switch(b.nature){case"POSITIVE":b.style=a.Accept;break;case"NEGATIVE":b.style=a.Reject;default:}return cross.fnd.fiori.inbox.util.tools.ButtonListHelper.prototype.originalEnsureButton.apply(this,arguments);};}}};}());return cross.fnd.fiori.inbox.util.FooterButtonExtension;});

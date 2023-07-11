@@ -1,0 +1,59 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:sfi="sap.ui.comp.smartfield"
+	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1">
+	<m:columns>
+		<template:with path="meta>" helper="cross.fnd.fiori.inbox.annotationBasedTaskUI.util.util.createFirstColumnHandledContext"
+			var="firstColumnHandled">
+			<template:repeat list="{collection>}" var="datafield">
+				<template:if test="{= ${datafield>com.sap.vocabularies.UI.v1.Importance/EnumMember} === 'com.sap.vocabularies.UI.v1.ImportanceType/High'}">
+					<template:if test="{= ${datafield>RecordType} !== 'com.sap.vocabularies.UI.v1.DataFieldForAction'}">
+						<template:with helper="sap.ui.model.odata.AnnotationHelper.resolvePath" path="datafield>Value" var="datafieldValue">
+							<template:if
+								test="{= ${ path : 'datafield>', formatter : 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.util.isNavigationProperty'} !== true }">
+								<m:Column demandPopin="true" hAlign="{= ${datafield>EdmType} === 'Edm.Decimal' ? 'End' : 'Begin'}"
+									minScreenWidth="{path: 'firstColumnHandled>/', formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.util.getMinScreenWidthAttribute'}">
+									<template:if test="{datafield>Label}">
+										<template:then>
+											<m:Text text="{path: 'datafield>Label', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}"/>
+										</template:then>
+										<template:else>
+											<m:Text text="{path: 'datafieldValue>com.sap.vocabularies.Common.v1.Label', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}"/>
+										</template:else>
+									</template:if>
+								</m:Column>
+							</template:if>
+						</template:with>
+					</template:if>
+				</template:if>
+			</template:repeat>
+		</template:with>
+	</m:columns>
+	<m:ColumnListItem type="{path : 'listEntityType>', formatter : 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.util.getListItemType'}">
+		<m:cells>
+			<template:repeat list="{collection>}" var="datafield">
+				<template:if test="{= ${datafield>com.sap.vocabularies.UI.v1.Importance/EnumMember} === 'com.sap.vocabularies.UI.v1.ImportanceType/High'}">
+					<template:if
+						test="{= ${ path : 'datafield>', formatter : 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.util.isNavigationProperty'} !== true }">
+						<template:if test="{= ${datafield>RecordType} !== 'com.sap.vocabularies.UI.v1.DataFieldForAction'}">
+							<l:VerticalLayout>
+								<template:with helper="sap.ui.model.odata.AnnotationHelper.resolvePath" path="datafield>Value" var="target">
+									<template:if test="{target>com.sap.vocabularies.Common.v1.Text}">
+										<m:FormattedText
+											htmlText="{path: 'target>com.sap.vocabularies.Common.v1.Text', formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.formatTableLabel'}"/>
+									</template:if>
+								</template:with>
+								<sfi:SmartField controlContext="ResponsiveTable"
+									url="{= (${datafield>Url} &amp;&amp; ${path: 'datafield>Url', formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.sapUshellUtil.shouldRenderLink'}) ? ${path: 'datafield>Url', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}: ''}"
+									value="{path: 'datafield>Value', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}" contextEditable="false"/>
+							</l:VerticalLayout>
+						</template:if>
+					</template:if>
+				</template:if>
+			</template:repeat>
+		</m:cells>
+	</m:ColumnListItem>
+</core:FragmentDefinition>

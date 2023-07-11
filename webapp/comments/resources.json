@@ -1,0 +1,40 @@
+{
+	"_version": "1.1.0",
+	"resources": [
+		{
+			"name": "Component-dbg.js",
+			"size": 1914,
+			"isDebug": true
+		},
+		{
+			"name": "Component.js",
+			"size": 1448
+		},
+		{
+			"name": "i18n/i18n.properties",
+			"size": 0
+		},
+		{
+			"name": "util/Formatters-dbg.js",
+			"size": 2305,
+			"isDebug": true
+		},
+		{
+			"name": "util/Formatters.js",
+			"size": 1052
+		},
+		{
+			"name": "view/Comments-dbg.controller.js",
+			"size": 1553,
+			"isDebug": true
+		},
+		{
+			"name": "view/Comments.controller.js",
+			"size": 846
+		},
+		{
+			"name": "view/Comments.view.xml",
+			"size": 1076
+		}
+	]
+}

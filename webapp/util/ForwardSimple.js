@@ -1,0 +1,4 @@
+/*
+ * Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+ */
+sap.ui.define(["sap/ui/base/Object","sap/ui/model/json/JSONModel","sap/ui/core/mvc/XMLView","sap/base/Log"],function(B,J,X,a){"use strict";B.extend("cross.fnd.fiori.inbox.util.ForwardSimple",{});cross.fnd.fiori.inbox.util.ForwardSimple=(function(){return{_oForwardSimpleViewPromise:null,open:function(c,n){this._oForwardSimpleViewPromise=this._oForwardSimpleViewPromise===null?this._createForwardSimpleViewPromise():this._oForwardSimpleViewPromise;this._oForwardSimpleViewPromise.then(function(f){var m=new J({closeDlg:c,numberOfItems:n});var d=f.byId("DLG_FORWARD_SIMPLE");d.setModel(m);d.open();});},_createForwardSimpleViewPromise:function(){return X.create({id:"MIB_VIEW_FORWARD_SIMPLE",viewName:"cross.fnd.fiori.inbox.view.ForwardSimple"}).catch(function(){a.error("Forward Simple dialog was not created successfully");});}};}());return cross.fnd.fiori.inbox.util.ForwardSimple;});

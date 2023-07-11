@@ -1,0 +1,4 @@
+/*
+ * Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+ */
+sap.ui.define(["sap/ui/model/SorterProcessor"],function(S){"use strict";var C=jQuery.extend({},S);C.apply=function(d,s,g,G){s=s.filter(function(a){return!(a.sPath==="CompletionDeadLine");});var t=this,c=[],e=[],v,o;if(!s||s.length===0){return d;}function f(a,b){if(a==b){return 0;}if(b==null){return-1;}if(a==null){return 1;}if(typeof a==="string"&&typeof b==="string"){return a.localeCompare(b);}if(a<b){return-1;}if(a>b){return 1;}return 0;}for(var j=0;j<s.length;j++){o=s[j];e[j]=o.fnCompare;if(!e[j]){e[j]=f;}jQuery.each(d,function(i,r){v=g(r,o.sPath);if(typeof v==="string"){v=v.toLocaleUpperCase();}if(!c[j]){c[j]=[];}if(G){r=G(r);}c[j][r]=v;});}d.sort(function(a,b){if(G){a=G(a);b=G(b);}var h=c[0][a],i=c[0][b];return t._applySortCompare(s,a,b,h,i,c,e,0);});return d;};return C;},true);

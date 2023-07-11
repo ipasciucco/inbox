@@ -1,0 +1,14 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<List items="{path: 'detail>/ObjectLinks/results'}" >
+		<items>
+			<CustomListItem>
+				<Link text= "{detail>Label}" target="_blank" rel="noreferrer noopener" href="{detail>ObjectLink}" wrapping="true" class="crossFndFioriInboxObjectLink"/>
+			</CustomListItem>
+		</items>
+	</List>
+</core:FragmentDefinition>

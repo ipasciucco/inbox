@@ -1,0 +1,399 @@
+{
+	"_version": "1.1.0",
+	"resources": [
+		{
+			"name": "Component-dbg.js",
+			"size": 15853,
+			"isDebug": true
+		},
+		{
+			"name": "Component.js",
+			"size": 6465
+		},
+		{
+			"name": "fragments/DataField.fragment.xml",
+			"size": 948
+		},
+		{
+			"name": "fragments/FacetForm.fragment.xml",
+			"size": 2307
+		},
+		{
+			"name": "fragments/FacetTable.fragment.xml",
+			"size": 1637
+		},
+		{
+			"name": "fragments/FieldGroup.fragment.xml",
+			"size": 1010
+		},
+		{
+			"name": "fragments/Header.fragment.xml",
+			"size": 2656
+		},
+		{
+			"name": "fragments/HeaderDataPoint.fragment.xml",
+			"size": 1900
+		},
+		{
+			"name": "fragments/InfoTab.fragment.xml",
+			"size": 1207
+		},
+		{
+			"name": "fragments/ListColumns.fragment.xml",
+			"size": 3599
+		},
+		{
+			"name": "i18n/i18n.properties",
+			"size": 2000,
+			"locale": "",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_ar.properties",
+			"size": 3240,
+			"locale": "ar",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_bg.properties",
+			"size": 3656,
+			"locale": "bg",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_ca.properties",
+			"size": 2019,
+			"locale": "ca",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_cs.properties",
+			"size": 2095,
+			"locale": "cs",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_da.properties",
+			"size": 1938,
+			"locale": "da",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_de.properties",
+			"size": 2048,
+			"locale": "de",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_el.properties",
+			"size": 3491,
+			"locale": "el",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_en.properties",
+			"size": 1904,
+			"locale": "en",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_en_US_sappsd.properties",
+			"size": 4410,
+			"locale": "en_US_sappsd",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_en_US_saptrc.properties",
+			"size": 2319,
+			"locale": "en_US_saptrc",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_es.properties",
+			"size": 2026,
+			"locale": "es",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_et.properties",
+			"size": 2013,
+			"locale": "et",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_fi.properties",
+			"size": 2033,
+			"locale": "fi",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_fr.properties",
+			"size": 2046,
+			"locale": "fr",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_hi.properties",
+			"size": 3411,
+			"locale": "hi",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_hr.properties",
+			"size": 2000,
+			"locale": "hr",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_hu.properties",
+			"size": 2092,
+			"locale": "hu",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_it.properties",
+			"size": 1948,
+			"locale": "it",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_iw.properties",
+			"size": 3104,
+			"locale": "iw",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_ja.properties",
+			"size": 2476,
+			"locale": "ja",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_kk.properties",
+			"size": 3522,
+			"locale": "kk",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_ko.properties",
+			"size": 2375,
+			"locale": "ko",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_lt.properties",
+			"size": 2054,
+			"locale": "lt",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_lv.properties",
+			"size": 2091,
+			"locale": "lv",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_ms.properties",
+			"size": 1940,
+			"locale": "ms",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_nl.properties",
+			"size": 1950,
+			"locale": "nl",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_no.properties",
+			"size": 1918,
+			"locale": "no",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_pl.properties",
+			"size": 2109,
+			"locale": "pl",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_pt.properties",
+			"size": 2015,
+			"locale": "pt",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_ro.properties",
+			"size": 2045,
+			"locale": "ro",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_ru.properties",
+			"size": 3460,
+			"locale": "ru",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_sh.properties",
+			"size": 2034,
+			"locale": "sh",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_sk.properties",
+			"size": 2123,
+			"locale": "sk",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_sl.properties",
+			"size": 2002,
+			"locale": "sl",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_sv.properties",
+			"size": 1962,
+			"locale": "sv",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_th.properties",
+			"size": 3662,
+			"locale": "th",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_tr.properties",
+			"size": 1999,
+			"locale": "tr",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_uk.properties",
+			"size": 3606,
+			"locale": "uk",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_vi.properties",
+			"size": 2571,
+			"locale": "vi",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_zh_CN.properties",
+			"size": 2152,
+			"locale": "zh_CN",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "i18n/i18n_zh_TW.properties",
+			"size": 2225,
+			"locale": "zh_TW",
+			"raw": "i18n/i18n.properties"
+		},
+		{
+			"name": "manifest.json",
+			"size": 564
+		},
+		{
+			"name": "util/GUILinkParser-dbg.js",
+			"size": 3038,
+			"isDebug": true
+		},
+		{
+			"name": "util/GUILinkParser.js",
+			"size": 1324
+		},
+		{
+			"name": "util/i18n-dbg.js",
+			"size": 810,
+			"isDebug": true
+		},
+		{
+			"name": "util/i18n.js",
+			"size": 519
+		},
+		{
+			"name": "util/navigationUtil-dbg.js",
+			"size": 1870,
+			"isDebug": true
+		},
+		{
+			"name": "util/navigationUtil.js",
+			"size": 1160
+		},
+		{
+			"name": "util/sapUshellUtil-dbg.js",
+			"size": 2545,
+			"isDebug": true
+		},
+		{
+			"name": "util/sapUshellUtil.js",
+			"size": 1241
+		},
+		{
+			"name": "util/util-dbg.js",
+			"size": 7625,
+			"isDebug": true
+		},
+		{
+			"name": "util/util.js",
+			"size": 4403
+		},
+		{
+			"name": "view/App.view.xml",
+			"size": 234
+		},
+		{
+			"name": "view/DecisionDialog-dbg.controller.js",
+			"size": 344,
+			"isDebug": true
+		},
+		{
+			"name": "view/DecisionDialog.controller.js",
+			"size": 273
+		},
+		{
+			"name": "view/DecisionDialog.view.xml",
+			"size": 2038
+		},
+		{
+			"name": "view/DecisionDialogManager-dbg.js",
+			"size": 17657,
+			"isDebug": true
+		},
+		{
+			"name": "view/DecisionDialogManager.js",
+			"size": 7798
+		},
+		{
+			"name": "view/Detail-dbg.controller.js",
+			"size": 5223,
+			"isDebug": true
+		},
+		{
+			"name": "view/Detail.controller.js",
+			"size": 3313
+		},
+		{
+			"name": "view/Detail.view.xml",
+			"size": 1840
+		},
+		{
+			"name": "view/TaskUI_S3-dbg.controller.js",
+			"size": 2971,
+			"isDebug": true
+		},
+		{
+			"name": "view/TaskUI_S3.controller.js",
+			"size": 2074
+		},
+		{
+			"name": "view/TaskUI_S3.view.xml",
+			"size": 3637
+		}
+	]
+}

@@ -1,0 +1,103 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View
+		controllerName="cross.fnd.fiori.inbox.controller.DetailDetail"
+		xmlns="sap.m"
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns:core="sap.ui.core"
+		xmlns:f="sap.f"
+		xmlns:suite="sap.suite.ui.commons">
+
+	<f:DynamicPage
+		class="sapUiNoContentPadding"
+		stickySubheaderProvider="tabBarLogs">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>DetailDetailView_Title}"/>
+				</f:heading>
+				<f:navigationActions>
+					<OverflowToolbarButton
+						id="enterFullScreenButton"
+						type="Transparent"
+						icon="sap-icon://full-screen"
+						press="handleFullScreen"
+						tooltip="{i18n>DetailDetailView_EnterFullScreenMode}"
+						visible="{parts: [{path: 'device>/system/phone'}, {path: 'fcl>/actionButtonsInfo/endColumn/fullScreen'}], formatter: '.formatter.enterExitFullScreenButtonsVisibility'}"/>
+					<OverflowToolbarButton
+						id="exitFullScreenButton"
+						type="Transparent"
+						icon="sap-icon://exit-full-screen"
+						press="handleExitFullScreen"
+						tooltip="{i18n>DetailDetailView_ExitFullScreenMode}"
+						visible="{parts: [{path: 'device>/system/phone'}, {path: 'fcl>/actionButtonsInfo/endColumn/exitFullScreen'}], formatter: '.formatter.enterExitFullScreenButtonsVisibility'}"/>
+					<OverflowToolbarButton
+						id="closeButton"
+						type="Transparent"
+						icon="sap-icon://decline"
+						press="handleClose"
+						tooltip="{i18n>DetailDetailView_CloseColumn}"
+						visible="{= ${fcl>/actionButtonsInfo/endColumn/closeColumn} !== null }"/>
+				</f:navigationActions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:content>
+			<IconTabBar 
+				id="tabBarLogs" 
+                busyIndicatorDelay="0"
+                expandable="false"
+                class="sapUiResponsivePadding--content sapUiResponsivePadding--header"
+				busy="{parametersModel>/busyIndicatorWorkflowLog}">
+					<items>	
+						<IconTabFilter 
+							id="WorkflowLogIconTabFilter" 
+							text="{i18n>DetailDetail_WorkFlowLogLabel}" 
+							key="WORKFLOWLOG"
+							>
+							<content>
+								<suite:Timeline 
+									id="timelineWorkflowLog"
+									showHeaderBar="false"
+									growingThreshold="50"
+									enableScroll="false"
+									growing="true"
+	              					noDataText="{parametersModel>/workflowLogNoDataText}"
+									content="{workflowLogModel>/results}">
+										<suite:content>
+											<suite:TimelineItem
+												icon="{parts: [{path: 'workflowLogModel>Status'}, {path: 'workflowLogModel>ResultType'}], formatter: '.formatter.formatterWorkflowLogStatusIcon'}" 
+												userName="{parts: [{path: 'workflowLogModel>PerformedByName'}, {path: 'workflowLogModel>Status'}], formatter: '.formatter.formatterWorkflowLogUsername'}"
+												userNameClickable="false"
+												userPicture="{parametersModel>/workflowLogUserPictureUrl}"
+												dateTime="{workflowLogModel>Timestamp}"
+												title="{parts: [{path: 'workflowLogModel>Status'}, {path: 'workflowLogModel>PerformedByName'}], formatter: '.formatter.formatterWorkflowLogStatusText'}">
+												<suite:embeddedControl>
+													<VBox>
+														<ObjectAttribute
+														text="{workflowLogModel>Description}">
+														</ObjectAttribute>
+														<ObjectStatus
+														class="sapUiTinyMarginTop"
+														text="{workflowLogModel>Result}"
+														state="{path: 'workflowLogModel>ResultType', formatter: '.formatter.formatterWorkflowLogResultState'}">
+														</ObjectStatus>
+													</VBox>
+												</suite:embeddedControl>
+											</suite:TimelineItem>
+										</suite:content>
+								</suite:Timeline> 	
+							</content>
+						</IconTabFilter>	
+							<IconTabFilter 
+								id="TaskLogIconTabFilter"
+								visible="false"
+								key="TASKLOG">
+							</IconTabFilter>
+					</items>
+			</IconTabBar>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

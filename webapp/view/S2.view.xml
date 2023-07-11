@@ -1,0 +1,72 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View xmlns:core="sap.ui.core"
+	xmlns="sap.m" controllerName="cross.fnd.fiori.inbox.view.S2">
+	<Page id="page" title="{i18n>MASTER_TITLE}">
+		<subHeader>
+			<OverflowToolbar>
+			<!-- 	<SearchField
+					search="handleMasterSearch"
+					liveChange="onLiveSearch"
+					showSearchButton="true"
+					showRefreshButton="true"
+					id="masterSearchField">
+				</SearchField> -->
+			</OverflowToolbar>
+		</subHeader>
+		<content>
+			<List id="list"
+			mode="{device>/listMode}" selectionChange="_handleSelect" swipe="_handleListSwipe"
+			updateStarted="onUpdateStarted" updateFinished="onUpdateFinished" modeAnimationOn="false" includeItemInSelection="true">
+				<items>
+					<!-- Extends the list item -->
+					<core:ExtensionPoint name="CustomerExtensionForObjectListItem">
+						<ObjectListItem id="MAIN_LIST_ITEM" type="{device>/listItemType}" press="_handleItemPress" class="sapMTextBold"
+							title="{parts: [{path: 'TaskTitle'}, {path: 'CustomAttributeData'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterTaskTitle'}"
+							intro="{parts: [{path: 'TaskSupports/Release'}, {path: 'SupportsRelease'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterStatusForReserved'}"
+							number="{path: 'CustomAttributeData', formatter:'cross.fnd.fiori.inbox.Conversions.formatterCustomNumberValue'}"
+							numberUnit="{path: 'CustomAttributeData', formatter:'cross.fnd.fiori.inbox.Conversions.formatterCustomNumberUnitValue'}">
+							<attributes>
+								<ObjectAttribute id="ATTR1" text="{parts: [{path: 'CreatedByName'}, {path: 'CustomAttributeData'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterCreatedBy'}" 
+														 tooltip="{parts: [{path: 'CreatedByName'}, {path: 'CustomAttributeData'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterCreatedBy'}"/>
+								<ObjectAttribute id="ATTR2" text="{parts: [{path: 'CompletionDeadLine'}, {path: 'IsOverdue'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterDueDate'}" />
+								<ObjectAttribute id="ATTR3" text="{path: 'SubstitutedUserName', formatter:'cross.fnd.fiori.inbox.Conversions.formatterSubstitutedText'}" 
+														 tooltip="{path: 'SubstitutedUserName', formatter:'cross.fnd.fiori.inbox.Conversions.formatterSubstitutedText'}" />
+								<ObjectAttribute id="ATTR4" text="{parts: [{path: 'CompletedOn'}, {path: 'Status'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterCompletedDate'}"/>
+								<ObjectAttribute id="ATTR5" text="{parts: [{path: 'ResumeOn'}, {path: 'Status'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterResumeOnText'}"/>
+								<ObjectAttribute id="ATTR6" text="{parts: [{path: 'CustomAttributeData'}, {path: 'taskDefinitionsModel>/'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterListCustomObjectAttributeValue'}"
+														 tooltip="{parts: [{path: 'CustomAttributeData'}, {path: 'taskDefinitionsModel>/'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterListCustomObjectAttributeValue'}"/>
+							</attributes>
+							<firstStatus>
+		                        <ObjectStatus id="STAT1" 
+		                        	text="{parts: [{path: 'SAP__Origin'}, {path: 'Priority'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterPriority'}"
+		                        	state="{path: 'Priority', formatter:'cross.fnd.fiori.inbox.Conversions.formatterPriorityState'}">
+		                        </ObjectStatus>
+		                    </firstStatus>
+		                    <secondStatus>
+		                        <ObjectStatus id="STAT2" 
+		                        	text="{parts: [{path: 'CompletionDeadLine'}, {path: 'IsOverdue'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterDeadLineIndicator'}" 
+		                        	state="{parts: [{path: 'CompletionDeadLine'}, {path: 'IsOverdue'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterDeadLineIndicatorState'}">
+		                        </ObjectStatus>
+		                    </secondStatus>
+						</ObjectListItem>
+					</core:ExtensionPoint>
+				</items>
+				<swipeContent>
+					<Button type="Accept" press="_handleSwipeApproved">
+						<!-- swipeContent 'text' modified from _handleListSwipe  -->
+					</Button>
+				</swipeContent>				
+			</List>
+			<List id="emptyList"
+				visible="false">
+			</List>
+		</content>
+        <footer>
+            <Bar id="footer"></Bar>
+        </footer>
+	</Page>
+</core:View>

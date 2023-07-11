@@ -1,0 +1,4 @@
+/*
+ * Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+ */
+sap.ui.define(["cross/fnd/fiori/inbox/controller/BaseController","sap/ui/Device"],function(B,D){"use strict";return B.extend("cross.fnd.fiori.inbox.controller.DetailEmpty",{onInit:function(){this.oRouter=this.getOwnerComponent().getRouter();this.oRouter.getRoute("myTasksDetailEmpty").attachPatternMatched(this._onDetailEmptyMatched,this);var p=this.byId("emptyPage");var e=this.byId("emptyLabel");var E=this.getResourceBundle().getText("emptyView.message");p.setTitle(E);e.setText(E);},onExit:function(){this.oRouter.detachRoutePatternMatched(this._onDetailEmptyMatched,this);},handleClose:function(){this.getOwnerComponent().getRouter().navTo("myTasksMaster",null,this.bReplaceHistory);},_onDetailEmptyMatched:function(){this.bReplaceHistory=!D.system.phone;}});},true);

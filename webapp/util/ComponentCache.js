@@ -1,0 +1,4 @@
+/*
+ * Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+ */
+sap.ui.define(["sap/ui/base/Object","sap/ui/Device","sap/ui/core/UIComponent"],function(U,D,a){"use strict";return U.extend("cross.fnd.fiori.inbox.ComponentCache",{constructor:function(c){U.prototype.constructor.call(this);var _=0;var b={};var d=0;var C;if(jQuery.isNumeric(c)){C=parseInt(c,10);C=C>0?C:undefined;}else{C=undefined;}if(D.system.desktop){_=(C)?C:20;}else{_=(C)?C:3;}this.destroyCacheContent=function(p){for(var k in b){if(k!==p){b[k].destroy();delete b[k];d--;}}};this.getComponentByKey=function(k){return b[k];};this.getComponentById=function(i){var k;for(k in b){if(b[k].getId()===i){return b[k];}}};this.cacheComponent=function(k,o){if(o instanceof a){if(b.hasOwnProperty(k)){return;}if(d>=_){var K=Object.keys(b)[0];b[K].destroy();delete b[K];d--;}b[k]=o;d++;}else{throw"Cannot cache object: Type mismatch.";}};}});});

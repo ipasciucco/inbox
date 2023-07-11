@@ -1,0 +1,46 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View
+	controllerName="cross.fnd.fiori.inbox.annotationBasedTaskUI.view.DecisionDialog"
+	xmlns:m="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:sfi="sap.ui.comp.smartfield"
+	xmlns:sfo="sap.ui.comp.smartform"
+	xmlns:layout="sap.ui.layout"
+	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1"
+>
+	<m:Dialog id="DecisionDialog" title="" icon="sap-icon://question-mark" type="Message">
+		<m:beginButton>
+			<m:Button id="SubmitBtn" text=""/>
+		</m:beginButton>
+		<m:endButton>
+			<m:Button id="CancelBtn" text=""/>
+		</m:endButton>
+		<m:content>
+			<sfo:SmartForm id="DecisionForm" editable="true" editTogglable="false" expandable="false" expanded="true" checkButton="false">
+				<sfo:layout>
+					<sfo:Layout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"/>
+				</sfo:layout>
+				<sfo:Group>
+					<sfo:layoutData>
+						<layout:GridData span="XL12 L12 M12 S12"/>
+					</sfo:layoutData>
+					<template:repeat list="{meta>/dialogFields}" var="dataField">
+						<template:if test="{= ${dataField>RecordType} === 'com.sap.vocabularies.UI.v1.DataField'}">
+							<sfo:GroupElement>
+								<sfi:SmartField id="Field{dataField>Value/Path}"
+									value="{path: 'dataField>Value', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}"
+									url="{= (${dataField>Url} &amp;&amp; ${path: 'dataField>Url', formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.sapUshellUtil.shouldRenderLink'}) ? ${path: 'dataField>Url', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}: ''}"
+									textLabel="{= ${dataField>Label} ? ${path: 'dataField>Label', formatter: 'sap.ui.model.odata.AnnotationHelper.format'} : ''}"
+									change="onChange" width="100%" fixedValueListValidationEnabled="true"/>
+							</sfo:GroupElement>
+						</template:if>
+					</template:repeat>
+				</sfo:Group>
+			</sfo:SmartForm>
+		</m:content>
+	</m:Dialog>
+</mvc:View>

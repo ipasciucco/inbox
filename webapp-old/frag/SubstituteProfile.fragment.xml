@@ -1,0 +1,14 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+
+					
+				      <StandardListItem xmlns="sap.m"
+				        title="{userDataModel>/displayName}"
+				        description="{userDataModel>/company}"
+				        icon="{path:'userDataModel>/media_src', formatter: 'cross.fnd.fiori.inbox.Substitution.formatterUserPictureIcon'}" 
+				        iconDensityAware="false"
+				        iconInset="false" />
+    				

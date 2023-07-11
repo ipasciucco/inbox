@@ -1,0 +1,52 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+			controllerName="cross.fnd.fiori.inbox.view.AddInbox" xmlns:html="http://www.w3.org/1999/xhtml"
+			resourceBundleName="sap.ca.ui.i18n.i18n" resourceBundleAlias="ca_i18n">
+
+	<Dialog id="DLG_ADD_INBOX" title="{i18n>addInbox.dlg.title}" contentWidth="400px" contentHeight="440px" beforeOpen="onBeforeOpenDialog">
+		<content>
+			<List id="LST_USERS" items="{/agents}" 
+				showNoData="false" noDataText="{i18n>addInbox.lst.nodata}"
+				includeItemInSelection="true">
+				<CustomListItem id="ITM_USER">
+					<VBox>
+						<FlexBox alignItems="Start" justifyContent="SpaceBetween">
+							<items>
+								<HBox class="sapUiTinyMarginTopBottom sapUiTinyMarginBeginEnd">
+									<Image 
+										src="{parts: [{path:'User'}, {path:'SAP__Origin'}], formatter: 'cross.fnd.fiori.inbox.Substitution.formatterSubstitutedUserPicture'}" 
+										width="2.5em" 
+										height="2.5em" />
+	          						<Link
+	          							emphasized="true"
+	          							class="sapUiTinyMarginTop sapUiSmallMarginBegin"  
+	          							text="{parts: [{path: 'User'}, {path: 'FullName'}], formatter: 'cross.fnd.fiori.inbox.Substitution.formatterSubstitutedUserName'}" 
+	          							press="onSelectUserLink" />
+	       					 	</HBox>
+	        					<Switch
+	        						class="sapUiTinyMarginBegin sapUiSmallMarginEnd"
+	        						state="{IsEnabled}" 
+	        						customTextOn=" " 
+	        						customTextOff=" "
+	        						change="handleChange" />
+	        				</items>
+	      				</FlexBox>
+	      				<ObjectStatus
+          					class="sapUiSmallMarginBeginEnd sapUiTinyMarginBottom"
+							text="{i18n>addInbox.dlg.warning}"
+							state="Error"
+							icon="sap-icon://alert"
+							visible="{bShowWarning}" />
+      				</VBox>
+				</CustomListItem>
+			</List>
+		</content>
+		<endButton>
+			<Button press="onCancelDialog" text="{i18n>addInbox.btn.done}"/>
+		</endButton>
+	</Dialog>
+</core:View>

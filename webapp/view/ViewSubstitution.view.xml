@@ -1,0 +1,95 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View controllerName="cross.fnd.fiori.inbox.view.ViewSubstitution"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout"
+	xmlns:sap.ca.ui="sap.ca.ui"
+	xmlns:suite="sap.suite.ui.commons">
+	<Page class="marginBoxContent">
+    <content>
+    <IconTabBar id="iconTabBar" select="handleIconTabBarSelect">
+    	<items>
+      		<IconTabFilter icon="sap-icon://customer-history" text="{i18n>substn.planned}" key="PLANNED" 	tooltip="{i18n>substn.planned}"/>
+      		<IconTabFilter icon="sap-icon://person-placeholder" text="{i18n>substn.unplanned}" key="UNPLANNED" 	tooltip="{i18n>substn.unplanned}" />
+        </items>
+    </IconTabBar> 
+    	<Table id="substitutionRules" items="{path:'substitution>/modelData'}" mode="SingleSelectMaster" selectionChange="handleRuleSelection" >
+    	 
+    		<columns>
+    			<Column hAlign="{ path: 'substitutionTypeModel>/bPhone', formatter: 'cross.fnd.fiori.inbox.Substitution.formatterToAlignColumn'}" mergeDuplicates="{path: 'substitutionTypeModel>/bPhone', formatter: 'cross.fnd.fiori.inbox.Substitution.formatterToMerge'}" mergeFunctionName="data#userid" />
+    			
+    			<Column mergeDuplicates="{ path: 'substitutionTypeModel>/bPhone', formatter: 'cross.fnd.fiori.inbox.Substitution.formatterToMerge'}"  mergeFunctionName="data#userid"  >
+        			<header>
+          				<Text text="{i18n>substn.table.user_name}" />
+        			</header>
+      			</Column>
+      			
+	  			<Column visible="{substitutionTypeModel>/data/bPlanned}" minScreenWidth ="Tablet" demandPopin = "true">
+			        <header>
+          				<Text visible="{substitutionTypeModel>/data/bPlanned}" text="{i18n>substn.table.duration}" /> 
+        			</header>
+      			</Column>
+      			
+			    <Column visible="{substitution>/bTaskGroupColumnVisible}">
+        			<header>
+          				<Text text="{i18n>substn.table.task_group}" />
+        			</header>
+      			</Column>
+      			
+			    <Column minScreenWidth ="Tablet" demandPopin = "true">
+        			<header>
+          				<Text text="{i18n>substn.table.start_date}" />
+        			</header>
+      			</Column>
+      			
+				<Column visible="{substitutionTypeModel>/data/bPlanned}" minScreenWidth ="Tablet" demandPopin = "true">
+        			<header>
+          				<Text visible="{substitutionTypeModel>/data/bPlanned}" text="{i18n>substn.table.end_date}" /> 
+        			</header>
+      			</Column>
+      			
+      			<Column minScreenWidth ="Tablet" demandPopin = "true">
+      			</Column>
+      			
+      			 <core:ExtensionPoint name="CustomerExtensionForSubstitutionRowHeader" />
+      			
+      			
+	    	</columns>
+	    	
+    		<ColumnListItem>
+    			<layout:HorizontalLayout>
+    				<Image
+    					visible="{parts: [{path:'substitution>User'}, {path:'substitution>aKeys/0/SAP__Origin'}], formatter: 'cross.fnd.fiori.inbox.Substitution.formatterUserPictureVisibility'}" 
+    					src="{parts: [{path:'substitution>User'}, {path:'substitution>aKeys/0/SAP__Origin'}], formatter: 'cross.fnd.fiori.inbox.Substitution.formatterUserPictureUrl'}" 
+    					width="3.750em" 
+    					height="3.750em" 
+    				/>
+    				<core:Icon
+    					visible="{parts: [{path:'substitution>User'}, {path:'substitution>aKeys/0/SAP__Origin'}], formatter: 'cross.fnd.fiori.inbox.Substitution.formatterUserIconVisibility'}"
+    					src="person-placeholder"
+				    	size="2rem"
+				    	width="1.75em"
+				    	height="1.75em"
+				    	color="#bfbfbf"
+				    	backgroundColor="#f2f2f2" 
+				    />
+    			</layout:HorizontalLayout>
+    			<ObjectIdentifier  title="{parts: [{path:'substitution>User'}, {path:'substitution>FullName'}], formatter: 'cross.fnd.fiori.inbox.Substitution.formatterUserName'}" text="{ parts: [{path:'substitution>User'},  {path:'userDetails>bActive'}, {path:'substitution>Mode'}, {path:'substitution>BeginDate'}], formatter: 'cross.fnd.fiori.inbox.Substitution.formatterSubstitutesStatus' }" titleActive="true" titlePress="onEmployeeProfileLaunch"/> 
+    			<Text  visible="{substitutionTypeModel>/data/bPlanned}" text="{parts: [{path:'substitution>BeginDate'}, {path:'substitution>EndDate'}], formatter: 'cross.fnd.fiori.inbox.Substitution.formatterTimeDuration'}"/> 
+			    <Text text="{parts:[{path: 'substitution>ProfileText'}, {path: 'substitution>Profile'}], formatter: 'cross.fnd.fiori.inbox.Substitution.formatterProfileText'}" />
+			    <Text text="{ path: 'substitution>BeginDate', formatter: 'cross.fnd.fiori.inbox.Substitution.formatterSubstitutionStartDate' }" />
+			    <Text  visible="{substitutionTypeModel>/data/bPlanned}" text="{parts: [{path:'substitution>BeginDate'}, {path:'substitution>EndDate'}], formatter: 'cross.fnd.fiori.inbox.Substitution.formatterSubstitutionEndDate' }" /> 
+		  		<ObjectStatus text="{i18n>substn.create.rule.error}" visible="{path: 'substitution>bExistInAllSystem', formatter: 'cross.fnd.fiori.inbox.Substitution.formatterDisplayErroneousRuleStatus'}" state="Error" icon="sap-icon://status-error" />
+		  		<core:ExtensionPoint name="CustomerExtensionForSubstitutionRowData" />
+		    </ColumnListItem>
+		   
+  		</Table>
+  		<core:ExtensionPoint name="CustomerExtensionForSubstitutionAdditionalDetails" />
+    </content>
+  </Page>
+</core:View>

@@ -1,0 +1,27 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View controllerName="cross.fnd.fiori.inbox.controller.DetailEmpty"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form">
+
+	<Page id="emptyPage" showHeader="true">
+		<customHeader>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<OverflowToolbarButton id="closeButton" type="Transparent" icon="sap-icon://decline" press="handleClose" tooltip="{i18n>DetailView_CloseColumn}" visible="{= ${fcl>/actionButtonsInfo/midColumn/closeColumn} !== null}"/>
+			</OverflowToolbar>
+		</customHeader>
+		<content>
+			<VBox id="textBox" class="textcontainer" height="100%" alignItems="Center" justifyContent="Center">
+				<items>
+					<Text id="emptyLabel" class="textclass"></Text>
+				</items>
+			</VBox>
+		</content>
+	</Page>
+</mvc:View> 

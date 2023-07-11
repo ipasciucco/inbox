@@ -1,0 +1,38 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+			controllerName="cross.fnd.fiori.inbox.view.Forward" xmlns:html="http://www.w3.org/1999/xhtml"
+			resourceBundleName="sap.ca.ui.i18n.i18n" resourceBundleAlias="ca_i18n">
+
+	<Dialog id="DLG_FORWARD" title="{i18n>view.Forward.title}" contentWidth="480px" contentHeight="440px" beforeOpen="onBeforeOpenDialog">
+		<subHeader>
+			<Bar>
+				<contentMiddle>
+					<SearchField id="SFD_FORWARD" liveChange="onLiveChange" showMagnifier="false" search="onAgentSearch" tooltip="{i18n>search.user}"></SearchField>
+				</contentMiddle>
+			</Bar>
+		</subHeader>
+		<content>
+			<List id="LST_AGENTS" items="{/agents}" 
+				showNoData="false" noDataText="{i18n>view.Forward.noRecipients}"
+				includeItemInSelection="true">
+				<StandardListItem id="ITM_AGENT" 
+						title="{parts: [{path: 'DisplayName'}, {path: 'UniqueName'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterAgentName'}" 
+						description="{Department}"
+						icon="{path:'__metadata/media_src', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterUserIcon'}" 
+						iconDensityAware="false"
+						type="DetailAndActive"
+						press="onSelectAgent"
+      					detailPress="handleDetailPress"
+						>
+				</StandardListItem>
+			</List>
+		</content>
+		<endButton>
+			<Button press="onCancelDialog" text="{ca_i18n>dialog.cancel}" tooltip="{i18n>close.userdialog}"/>
+		</endButton>
+	</Dialog>
+</core:View>

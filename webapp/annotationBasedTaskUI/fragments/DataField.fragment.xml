@@ -1,0 +1,20 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns:sfi="sap.ui.comp.smartfield"
+	xmlns:sfo="sap.ui.comp.smartform"
+>
+	<sfo:GroupElement binding="{path: 'groupFacet>Target', formatter: 'sap.ui.model.odata.AnnotationHelper.getNavigationPath'}">
+		<sfi:SmartField
+			value="{path: 'dataField>Value', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}"
+			url="{= (${dataField>Url} &amp;&amp; ${path: 'dataField>Url', formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.sapUshellUtil.shouldRenderLink'}) ? ${path: 'dataField>Url', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}: ''}"
+			textLabel="{= ${dataField>Label} ? ${path: 'dataField>Label', formatter: 'sap.ui.model.odata.AnnotationHelper.format'} : ''}"
+			entitySet="{entitySet>name}"
+			contextEditable="false"
+		/>
+	</sfo:GroupElement>
+</core:FragmentDefinition>

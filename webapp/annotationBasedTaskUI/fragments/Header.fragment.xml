@@ -1,0 +1,44 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1"
+>
+	<template:with helper="sap.ui.model.odata.AnnotationHelper.resolvePath" path="meta>com.sap.vocabularies.UI.v1.DataPoint#DataPoint01/Value" var="dataPoint01">
+		<template:with helper="sap.ui.model.odata.AnnotationHelper.resolvePath" path="meta>com.sap.vocabularies.UI.v1.HeaderInfo/Title/AdditionalValue" var="additionalValue">
+			<m:ObjectHeader
+				number="{parts: [ 
+									{path: 'meta>com.sap.vocabularies.UI.v1.DataPoint#DataPoint01/Value'},
+									{path: 'dataPoint01>Org.OData.Measures.V1.ISOCurrency'}
+								 ], formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.formatHeaderNumber'}"
+				numberUnit="{path: 'dataPoint01>Org.OData.Measures.V1.ISOCurrency', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}"
+				title="{parts : [ 
+									{path: 'meta>com.sap.vocabularies.UI.v1.HeaderInfo/Title/Value'},
+									{path: 'meta>com.sap.vocabularies.UI.v1.HeaderInfo/Title/AdditionalValue'},
+									{path: 'additionalValue>Org.OData.Measures.V1.Unit'}
+								], formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.formatHeaderTitle'}"
+				titleActive="{path: 'meta>com.sap.vocabularies.UI.v1.HeaderInfo/Title/Url', formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.sapUshellUtil.shouldRenderLink'}"
+                titlePress="onVendorPress"
+				titleTarget="{path: 'meta>com.sap.vocabularies.UI.v1.HeaderInfo/Title/Url', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}"
+                titleLevel="H3">
+				<m:statuses>
+					<template:with helper="sap.ui.model.odata.AnnotationHelper.resolvePath" path="meta>com.sap.vocabularies.UI.v1.DataPoint#DataPoint02" var="dataPoint">
+						<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.HeaderDataPoint" type="XML"/>
+					</template:with>
+					<template:with helper="sap.ui.model.odata.AnnotationHelper.resolvePath" path="meta>com.sap.vocabularies.UI.v1.DataPoint#DataPoint03" var="dataPoint">
+						<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.HeaderDataPoint" type="XML"/>
+					</template:with>
+				</m:statuses>
+				<m:attributes>
+					<m:ObjectAttribute
+						text="{path: 'meta>com.sap.vocabularies.UI.v1.HeaderInfo/Description/Value', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}">
+					</m:ObjectAttribute>
+				</m:attributes>
+			</m:ObjectHeader>
+		</template:with>
+	</template:with>
+</core:FragmentDefinition>

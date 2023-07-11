@@ -1,0 +1,95 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<Dialog xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+		contentWidth="400px" contentHeight="650px" beforeClose="onBeforeCloseDialog" showHeader="false">
+		<NavContainer id="NAV_ADD_SUBST">
+			<Page id="detail_substitutes" showNavButton="false" navButtonPress="onNavBack" title="{i18n>substn.table.user_name}">
+				<subHeader>
+      				<Toolbar>
+        				<SearchField id="SEARCH_SUBSTITUTE" search="onSearchOfSubstitutes" width="100%" liveChange="handleLiveChange"/>
+      				</Toolbar>
+    			</subHeader>
+    			<content>
+    				<core:Fragment fragmentName="cross.fnd.fiori.inbox.frag.UserPicker" type="XML" />
+    			</content>
+			</Page>
+			
+			<Page id="detail_profiles" showNavButton="true" navButtonPress="onNavBack" title="{i18n>substn.create.chose_profile}">
+				
+    			<content>
+				<VerticalLayout id="LST_USR_DATA" xmlns="sap.ui.layout" enabled="false" width="100%">
+	    			<content>
+	    			  <core:Fragment fragmentName="cross.fnd.fiori.inbox.frag.SubstituteProfile" type="XML" />
+	    			</content>
+    			</VerticalLayout>
+    			  <List id="LST_ALL_TOPICS" 
+    			  		mode="SingleSelectMaster" 
+    			  		selectionChange="onSelectAllTopics" 
+    			  		 >
+				    <StandardListItem id="ITM_ALL_TOPICS" title="{i18n>substn.create.all_topics}" type="{path:'substitutionTypeModel>/data/bPlanned', formatter:'cross.fnd.fiori.inbox.Substitution.formatterPlannedOrUnplannedNavigation'}" />
+				  </List>
+    			  <List id="LST_PROFILES" 
+    			  		mode="SingleSelectMaster" 
+    			  		selectionChange="onSelectProfile"
+    			  		showNoData="false"
+    			  		items="{profiles>/profiles}" >
+				    <StandardListItem id="ITM_PROFILE" title="{profiles>ProfileText}" type="{path:'substitutionTypeModel>/data/bPlanned', formatter:'cross.fnd.fiori.inbox.Substitution.formatterPlannedOrUnplannedNavigation'}" />
+				  </List>
+				</content>
+			</Page>		
+			
+			<Page id="date_selection" showNavButton="true" navButtonPress="onNavBack" title="{i18n>substn.create.choose_substn_period}">
+				<VerticalLayout xmlns="sap.ui.layout" enabled="false" width="100%">
+						<content>
+					      <core:Fragment fragmentName="cross.fnd.fiori.inbox.frag.SubstituteProfile" type="XML" />
+					    </content>
+				</VerticalLayout>
+				<VerticalLayout xmlns="sap.ui.layout" enabled="false" width="100%">
+					<content>
+					      <StandardListItem xmlns="sap.m"
+					        title= "{i18n>substn.table.task_group}"
+					        icon= "sap-icon://appointment-2"
+					        iconInset="false"
+					        description="{userDataModel>/profileTitle}"
+					       />
+					 </content>
+				</VerticalLayout>
+				<VerticalLayout xmlns="sap.ui.layout" enabled="false" width="100%">
+					<content>
+					      <StandardListItem xmlns="sap.m"
+					      	icon="sap-icon://activity-items"
+					      	iconInset = "false"
+					        title="{i18n>substn.table.duration}"
+					        description="{userDataModel>/period}"
+					       />
+					 </content>
+				</VerticalLayout>
+				
+				<content>
+					<FlexBox
+	          		alignItems="Center"
+	          		justifyContent="Center">
+	          			<items>
+		            		<u:Calendar id="selectionCalendar"
+			                    intervalSelection="true"
+			                     selectionMode="RANGE"             
+			             		 select="onChangeRange" tapOnDate= "onSingleDateSelection">
+		             		 </u:Calendar>
+	          			</items>
+	        		</FlexBox>
+                </content>
+            </Page>       
+			
+			
+		</NavContainer>
+		<beginButton>
+			<Button id="BTN_SAVE" text="{i18n>substn.create.save}" press="handleCreateSubstitutionPopOverSave"/>
+		</beginButton>
+		
+		<endButton>
+        	<Button id="BTN_CANCEL" text="{i18n>substn.delete.cancel_button}" press="handleCreateSubstitutionPopOverCancel"/>
+		</endButton>
+	</Dialog>

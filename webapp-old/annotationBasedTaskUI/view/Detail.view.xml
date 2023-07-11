@@ -1,0 +1,46 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View
+	controllerName="cross.fnd.fiori.inbox.annotationBasedTaskUI.view.Detail"
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1"
+>
+	<m:Page id="detailPage" class="sapUiFioriObjectPage" showHeader="false">
+		<m:content>
+			<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.Header" type="XML"/>
+			<template:repeat list="{path : 'meta>com.sap.vocabularies.UI.v1.Facets'}" var="facet">
+				<template:if test="{path : 'facet>com.sap.vocabularies.UI.v1.IsSummary'}">
+					<template:then>
+						<m:IconTabBar select="handleTabSelect">
+							<m:items>
+								<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.InfoTab" type="XML"/>
+							</m:items>
+						</m:IconTabBar>
+						<l:HorizontalLayout class="sapUiSmallMargin"/>
+					</template:then>
+				</template:if>
+			</template:repeat>
+			<template:repeat list="{path : 'meta>com.sap.vocabularies.UI.v1.Facets'}" var="facet">
+				<template:if test="{path : 'facet>com.sap.vocabularies.UI.v1.IsSummary'}">
+					<template:then>
+					</template:then>
+					<template:else>
+						<template:if test="{path: 'facet>Target', formatter: 'sap.ui.model.odata.AnnotationHelper.isMultiple'}">
+							<template:then>
+								<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.FacetTable" type="XML"/>
+							</template:then>
+							<template:else>
+								<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.FacetForm" type="XML"/>
+							</template:else>
+						</template:if>
+					</template:else>
+				</template:if>
+			</template:repeat>
+		</m:content>
+	</m:Page>
+</core:View>

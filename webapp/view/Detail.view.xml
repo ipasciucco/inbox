@@ -1,0 +1,190 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View
+		controllerName="cross.fnd.fiori.inbox.controller.Detail"
+		xmlns="sap.m"
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns:core="sap.ui.core"
+		xmlns:f="sap.ui.layout.form">
+
+	<Page 
+		id="page"
+		showFooter="{= ${detailView>/ResponseOptions} !== undefined}"
+		floatingFooter="true">
+		<!-- floatingFooter may also be disabled, but it has no effect when showFooter is false (however, it will be necessary when showFooter is enabled conditionally in the future)-->
+		<customHeader>
+			<OverflowToolbar>
+            	<ToolbarSpacer/>
+				<Title 
+					id="customHeaderTitle"
+					text="{detailView>/TaskDefinitionName}"
+					titleStyle="H6">
+				</Title>
+				<ToolbarSpacer/>
+				<Button 
+					id="openTaskButton" 
+					text="{i18n>XBUT_OPEN}" 
+					press="handleOpenTaskButton"
+					visible="{= !!${detailView>/GUI_Link}}"/>
+				<ToggleButton 
+					id="showLogButton" 
+					text="{i18n>DetailView_ShowLogButton}" 
+					press="handleShowLogPress" 
+					pressed="{parametersModel>/showLogButtonPressed}" 
+					visible="{parametersModel>/showLogButtonVisible}"/>
+				<ToggleButton 
+					id="showDetailsButton" 
+					text="{i18n>XBUT_SHOWDETAILS}" 
+					press="handleShowDetailsPress" 
+					pressed="{parametersModel>/showDetailsButtonPressed}" 
+					visible="{parametersModel>/showDetailsButtonVisible}"/>
+				<OverflowToolbarButton
+					id="enterFullScreenButton"
+					type="Transparent"
+					icon="sap-icon://full-screen"
+					press="handleFullScreen"
+					tooltip="{i18n>DetailView_EnterFullScreenMode}"
+					visible="{parts: [{path: 'device>/system/phone'}, {path: 'fcl>/actionButtonsInfo/midColumn/fullScreen'}], formatter: '.formatter.enterExitFullScreenButtonsVisibility'}"/>
+				<OverflowToolbarButton
+					id="exitFullScreenButton"
+					type="Transparent"
+					icon="sap-icon://exit-full-screen"
+					press="handleExitFullScreen"
+					tooltip="{i18n>DetailView_ExitFullScreenMode}"
+					visible="{parts: [{path: 'device>/system/phone'}, {path: 'fcl>/actionButtonsInfo/midColumn/exitFullScreen'}], formatter: '.formatter.enterExitFullScreenButtonsVisibility'}"/>
+				<OverflowToolbarButton
+					id="closeButton"
+					type="Transparent"
+					icon="sap-icon://decline"
+					press="handleClose"
+					tooltip="{i18n>DetailView_CloseColumn}"
+					visible="{= ${fcl>/actionButtonsInfo/midColumn/closeColumn} !== null}"/>
+			</OverflowToolbar>
+		</customHeader>
+		<content>
+			<ObjectHeader
+				id="objectHeader"
+				responsive="true"
+				fullScreenOptimized="true"
+				class="sapUiResponsiveContentPadding sapUiResponsivePadding--content sapUiResponsivePadding--header"
+				title="{detailView>/TaskTitle}">
+				<statuses>
+					<!-- visible will be set to true when we know how to display the data CENTRALINBOX-2678 -->
+					<ObjectStatus
+						title="{i18n>DetailView_CreatedByColumnTitle}"
+						text="{detailView>/CreatedByName}"
+						visible="false"/>
+					<ObjectStatus
+						title="{i18n>DetailView_PriorityColumnTitle}"
+						text="{
+							path: 'detailView>/Priority',
+							formatter: '.formatter.priorityText'
+						}"
+						state="{
+								path: 'detailView>/Priority',
+								formatter: '.formatter.priorityStateOnDetail'
+						}"
+						tooltip="{
+								path: 'detailView>/Priority',
+								formatter: '.formatter.priorityText'
+						}"
+						visible="{detailView>/bPriorityVisible}"/>
+					<ObjectStatus
+						title="{i18n>DetailView_StatusColumnTitle}"
+						text="{
+							path: 'detailView>/Status',
+							formatter: '.formatter.formatStatus'
+						}"/>
+					<ObjectStatus
+						title="{i18n>DetailView_CreatedOnColumnTitle}"
+						text="{
+							path: 'detailView>/CreatedOn',
+							formatter: '.formatter.formatDate'
+						}"/>
+					<ObjectStatus
+						title="{i18n>DetailView_DueColumnTitle}"
+						text="{
+							path: 'detailView>/CompletionDeadLine',
+							formatter: '.formatter.formatDate'
+						}"
+						state="{
+							path: 'detailView>/CompletionDeadLine',
+							formatter: '.formatter.dueState'
+						}">
+					</ObjectStatus>
+				</statuses>
+				<headerContainer>
+					<IconTabBar
+						id="iconTabBar"
+						headerMode="Inline"
+						expandable="false"
+						class="sapUiResponsivePadding--content">
+						<items>
+							<IconTabFilter
+								text="{i18n>DetailView_AdditionalInformation}">
+								<ScrollContainer id="infoTabContent">
+									<content>
+										<core:HTML
+											content="{path: 'detailView>/Description', formatter: '.formatter.descriptionHtml'}" 
+											sanitizeContent="true"
+											visible="{detailView>/bAdditionalInformationVisible}"/>
+										<VBox
+											alignItems="Center"
+											visible="{detailView>/bNoAdditionalInformationMessageVisible}"
+											class="sapUiResponsiveMargin">
+											<Title
+												text="{i18n>DetailView_No_AdditionalInformation_Message}"
+												titleStyle="H3"
+												wrapping="true"
+												textAlign="Center"
+												class="sapUiLargeMarginTop"/>
+										</VBox>
+										<VBox
+											class="sapUiSmallMarginTop"
+											visible="{detailView>/bShowCustomAttributesInDetail}">
+											<f:Form 
+												id="CustomAttributesForm"
+												editable="false">
+												<f:layout>
+													<f:ResponsiveGridLayout
+														labelSpanXL="6"
+														labelSpanL="6"
+														labelSpanM="6"
+														labelSpanS="6" />
+												</f:layout>
+												<f:formContainers>
+													<f:FormContainer
+														formElements="{detailView>/CustomAttributeData/results}">
+														<f:formElements>
+															<f:FormElement 
+																label="{detailView>Label}"
+																visible="{detailView>Visible}">
+																<f:fields>
+																	<Text text="{parts: [{path:'detailView>Value'}, {path:'detailView>Type'}, {path:'detailView>Format'}], formatter: '.formatter.customAttributeTypeFormatter'}"/>
+																</f:fields>
+															</f:FormElement>
+														</f:formElements>
+													</f:FormContainer>
+												</f:formContainers>
+											</f:Form>
+										</VBox>
+									</content>
+								</ScrollContainer>
+							</IconTabFilter>
+							<IconTabFilter
+								visible="false">
+							</IconTabFilter>
+						</items>
+					</IconTabBar>
+				</headerContainer>
+			</ObjectHeader>
+		</content>
+		<footer>
+			<OverflowToolbar id="overflowToolbar">
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View> 

@@ -1,0 +1,35 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View controllerName="cross.fnd.fiori.inbox.attachment.view.Attachments"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+
+<UploadCollection id="uploadCollection" items="{detail>/Attachments/results}" uploadEnabled="{path: 'detail>/TaskSupports/AddAttachments', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterEnableUpload'}"  uploadComplete="onAttachmentUploadComplete" fileDeleted="onAttachmentDeleted" change="onAttachmentChange" sameFilenameAllowed="true">
+	<items>
+	<UploadCollectionItem 
+		contributor="{detail>CreatedByName}"
+		documentId="{detail>ID}" 
+		fileName="{parts: [{path: 'detail>FileName'}, {path: 'detail>LinkDisplayName'}, {path: 'detail>mime_type'}], formatter:'cross.fnd.fiori.inbox.attachment.formatFileName'}"
+		mimeType="{detail>mime_type}"
+		thumbnailUrl="{parts: [{path: 'detail>Link'}, {path: 'detail>mime_type'}], formatter: 'cross.fnd.fiori.inbox.attachment.getRelativeSapIcon'}"
+	    uploadedDate="{path: 'detail>CreatedAt', formatter: 'cross.fnd.fiori.inbox.attachment.formatAttachmentCreatedAtDate'}"
+		url="{parts: [{path: 'detail>__metadata/media_src'}, {path: 'detail>Link'}, {path: 'detail>mime_type'}] , formatter: 'cross.fnd.fiori.inbox.attachment.getRelativeMediaSrc'}"
+		enableEdit="false"
+		visibleEdit="false"			
+		visibleDelete = "{detail>AttachmentSupports/Delete}">
+		
+		<attributes>
+			<ObjectAttribute
+				text="{parts: [{path: 'detail>FileSize'}, {path: 'detail>Link'}, {path: 'detail>mime_type'}], formatter:'cross.fnd.fiori.inbox.attachment.formatFileSize'}"
+			/>
+		</attributes>
+		
+	</UploadCollectionItem>
+	</items>
+	<parameters/>
+</UploadCollection>
+
+</core:View>

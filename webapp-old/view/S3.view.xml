@@ -1,0 +1,212 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View controllerName="cross.fnd.fiori.inbox.view.S3"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout"
+	xmlns:sap.ca.ui="sap.ca.ui"
+	xmlns:suite="sap.suite.ui.commons">
+	<Page id="mainPage">
+			<headerContent>
+		</headerContent>
+			
+			<layout:DynamicSideContent
+					id="DynamicSideContent"
+					class="sapUiDSCExplored"
+					sideContentFallDown="BelowM"
+					containerQuery="true"
+					sideContentVisibility="ShowAboveS"
+					showSideContent="false"		
+					breakpointChanged="updateToggleButtonState">
+			<layout:mainContent>	
+			<core:ComponentContainer id="genericComponentContainer" height="100%"
+			visible="{= ${detail>/showGenericComponent}}" propagateModel="{path: 'detail>/showGenericComponent', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterPropagateModel'}"
+			/>
+			<layout:FixFlex id="fioriElementsContainer" visible="{= ${detail>/embedFioriElements}}"/>		
+		
+		
+			<!-- Extends the header section -->
+			<core:ExtensionPoint name="CustomerExtensionForObjectHeader">
+				<ObjectHeader 
+					backgroundDesign="{path: 'detail>/SapUiTheme', formatter:'cross.fnd.fiori.inbox.Conversions.formatterThemeBasedBackgroundColor'}"
+					title="{parts: [{path: 'detail>/TaskTitle'}, {path: 'detail>/CustomAttributeData'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterTaskTitle'}"
+					titleLevel="H3"
+					number="{path: 'detail>/CustomAttributeData', formatter:'cross.fnd.fiori.inbox.Conversions.formatterCustomNumberValue'}"
+					numberUnit="{path: 'detail>/CustomAttributeData', formatter:'cross.fnd.fiori.inbox.Conversions.formatterCustomNumberUnitValue'}"
+					visible="{= ${detail>/showDefaultView}}"
+				>
+					<attributes>
+						<ObjectAttribute id="ARuserName" text="{parts: [{path: 'CreatedByName'}, {path: 'CustomAttributeData'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterCreatedBy'}" active="{path: 'CustomAttributeData', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterCreatedByLink'}" press="onEmployeeLaunchTask" />
+						<ObjectAttribute text="{path: 'detail>/CompletionDeadLine', formatter:'cross.fnd.fiori.inbox.Conversions.formatterDueDate'}" />
+						<ObjectAttribute text="{path: 'detail>/CreatedOn', formatter:'cross.fnd.fiori.inbox.Conversions.formatterCreatedDate'}" />
+					    <ObjectAttribute text="{parts: [{path: 'detail>/CompletedOn'}, {path: 'detail>/Status'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterCompletedDate'}"/>
+						<ObjectAttribute text="{parts: [{path: 'detail>/ResumeOn'}, {path: 'detail>/Status'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterResumeOnText'}"/>
+						<ObjectAttribute text="{parts: [{path: 'detail>/CustomAttributeData'}, {path: 'detail>/CustomAttributeDefinitionData'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterDetailCustomObjectAttributeValue'}" />
+					</attributes>
+
+					<firstStatus>
+						<ObjectStatus 
+							title="{i18n>STATUS_LABEL}"
+							text="{parts: [{path: 'detail>/SAP__Origin'}, {path: 'detail>/Status'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterStatus'}">
+						</ObjectStatus>
+					</firstStatus>
+
+					<secondStatus>
+						<ObjectStatus 
+							title="{i18n>PRIORITY_LABEL}"
+							text="{parts: [{path: 'detail>/SAP__Origin'}, {path: 'detail>/Priority'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterPriority'}"
+							state="{path: 'detail>/Priority', formatter:'cross.fnd.fiori.inbox.Conversions.formatterPriorityState'}">
+						</ObjectStatus>						
+					</secondStatus>
+				</ObjectHeader>
+			</core:ExtensionPoint>
+
+			<IconTabBar id="tabBar" expandable="false" select="onTabSelect" 
+			visible="{detail>/showDefaultView}"
+			>
+				<items>
+					<IconTabFilter icon="sap-icon://hint"
+						tooltip="{i18n>comments.tooltip}"
+						key="DESCRIPTION" id="DescriptionContent">
+						<!-- Extends the info tab content -->
+						<core:ExtensionPoint name="CustomerExtensionForInfoTabContent">
+							<layout:VerticalLayout id="infoTabContent" class="crossFndFioriInboxDescription">
+							<layout:content>
+							<core:HTML 
+								content="{path: 'detail>/Description', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterHtml'}" 
+								sanitizeContent="true"
+								/>
+							</layout:content>
+							
+							</layout:VerticalLayout>
+							
+							<!-- Form for custom attributes -->
+							
+							<form:Form>
+								<form:formContainers>
+									<form:FormContainer id="customAttributesContainer" />
+								</form:formContainers>
+								<form:layout>
+									<form:ResponsiveLayout />
+								</form:layout>
+							</form:Form>
+							
+							
+
+							
+						</core:ExtensionPoint>
+					</IconTabFilter>
+
+					<IconTabFilter id="MIBNoteIconTabFilter"
+						icon="sap-icon://notes"
+						tooltip="{i18n>notes.tooltip}"
+						count="{detail>/CommentsCount}"
+						visible="{parts: [{path: 'detail>/TaskSupports/Comments'}, {path: 'detail>/SupportsComments'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterSupportsProperty'}"
+						key="NOTES">
+						<!-- Extends the note tab content -->
+						<core:ExtensionPoint name="CustomerExtensionForNoteTabContent">
+							<core:ComponentContainer id="commentsContainer" propagateModel="true"/>
+						</core:ExtensionPoint>
+					</IconTabFilter>
+
+					<IconTabFilter id="MIBAttachmentIconTabFilter"
+						icon="sap-icon://attachment"
+						tooltip="{i18n>attachments.tooltip}"
+						count="{detail>/AttachmentsCount}"
+						visible="{parts: [{path: 'detail>/TaskSupports/Attachments'}, {path: 'detail>/SupportsAttachments'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterSupportsProperty'}"
+						key="ATTACHMENTS">
+						<!-- Extends the attachments tab content -->
+						<core:ExtensionPoint name="CustomerExtensionForAttachmentTabContent">
+							<core:ComponentContainer id="attachmentComponent"/>
+						</core:ExtensionPoint>
+					</IconTabFilter>
+
+					<IconTabFilter id="MIBObjectLinksTabFilter"
+						icon="sap-icon://chain-link"
+						tooltip="{i18n>relatedObjects.tooltip}"
+						count="{detail>/ObjectLinksCount}"
+						visible="{ path: 'detail>/TaskSupports/TaskObject', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterVisibilityOfObjectIconTab' }"
+						key="OBJECTLINKS">
+
+						<core:ExtensionPoint name="CustomerExtensionForObjectLinkTabContent">
+							<core:Fragment fragmentName="cross.fnd.fiori.inbox.frag.ObjectLinks" type="XML"/>
+						</core:ExtensionPoint>
+					</IconTabFilter>
+
+					<!-- Extends the tab bar with additional tabs -->
+					<core:ExtensionPoint name="CustomerExtensionForAdditionalTabs" />
+				</items>
+			</IconTabBar>
+
+			<core:ExtensionPoint name="CustomerExtensionForAdditionalDetails" />
+			</layout:mainContent>
+			<layout:sideContent>
+					<IconTabBar id="tabBarLogs" select="onLogTabSelect" visible="{= ${detail>/ShowLogPressed}}">
+							<items>	
+								<IconTabFilter id="WorkflowLogIconTabFilter" text="{i18n>XBUT_WORKFLOW_LOG}" tooltip="{i18n>workflowlog.tooltip}"
+												visible="{path: 'detail>/TaskSupports/WorkflowLog', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterLogTaskSupportsProperty'}"
+												key="WORKFLOWLOG">
+									<content>
+										<suite:Timeline id="timelineWorkflowLog" showHeaderBar="false" enableScroll="false" growing="true"/>
+									</content>
+								</IconTabFilter>	
+								<IconTabFilter id="TaskLogIconTabFilter" text="{i18n>XBUT_TASK_LOG}" tooltip="{i18n>tasklog.tooltip}"
+												visible="{path: 'detail>/TaskSupports/ProcessingLogs', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterLogTaskSupportsProperty'}"
+												key="TASKLOG">
+									<content>
+										<core:ExtensionPoint name="CustomerExtensionForHistoryTabContent">
+											<suite:Timeline id="timeline" showHeaderBar="false" enableScroll="false" growing="true"/>
+										</core:ExtensionPoint>
+									</content>
+								</IconTabFilter>
+							</items>
+					</IconTabBar>
+
+					<IconTabBar id="tabBarDetails" expandable="false" headerMode="Inline" select="onTabSelect" visible="{= !${detail>/ShowLogPressed}}">
+							<items>	
+								<IconTabFilter id="DetailsNoteIconTabFilter"
+									text="{i18n>CommentsLabel}"
+									tooltip="{i18n>notes.tooltip}"
+									count="{detail>/CommentsCount}"
+									visible="{parts: [{path: 'detail>/TaskSupports/Comments'}, {path: 'detail>/SupportsComments'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterSupportsProperty'}"
+									key="NOTES">
+										<core:ComponentContainer id="commentsContainerInDetails" propagateModel="true"/>
+								</IconTabFilter>
+			
+								<IconTabFilter id="DetailsAttachmentIconTabFilter"
+									text="{i18n>AttachmentsLabel}"
+									tooltip="{i18n>attachments.tooltip}"
+									count="{detail>/AttachmentsCount}"
+									visible="{parts: [{path: 'detail>/TaskSupports/Attachments'}, {path: 'detail>/SupportsAttachments'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterSupportsProperty'}"
+									key="ATTACHMENTS">
+										<core:ComponentContainer id="attachmentComponentInDetails"/>
+								</IconTabFilter>
+			
+								<IconTabFilter id="DetailsObjectLinksTabFilter"
+									text="{i18n>RelatedObjectsLabel}"
+									tooltip="{i18n>relatedObjects.tooltip}"
+									count="{detail>/ObjectLinksCount}"
+									visible="{ path: 'detail>/TaskSupports/TaskObject', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterVisibilityOfObjectIconTab' }"
+									key="OBJECTLINKS">
+										<core:Fragment fragmentName="cross.fnd.fiori.inbox.frag.ObjectLinks" type="XML"/>
+
+								</IconTabFilter>
+							</items>
+					</IconTabBar>
+
+					<!-- End of Side content -->
+					<cust:InvisibleControl xmlns:cust="cross.fnd.fiori.inbox.util" id="InvisibleTabStop" ariaLabelledBy="ACC_Text" />
+					<core:InvisibleText id= "ACC_Text" text="{i18n>SIDE_CONTENT_END_INFO}" />
+
+			</layout:sideContent>
+		</layout:DynamicSideContent>
+		<footer>
+			<Bar />
+		</footer>
+	</Page>
+
+</core:View>

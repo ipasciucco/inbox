@@ -1,0 +1,51 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns:sfo="sap.ui.comp.smartform"
+	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1"
+>
+	<!-- If the given facet has subfacets... -->
+	<template:if test="{facet>Facets}">
+		<template:then>
+			<template:if test="{path: 'facet>com.sap.vocabularies.UI.v1.IsSummary'}">
+				<template:then>
+				</template:then>
+				<template:else>				
+					<template:repeat list="{facet>Facets}" var="groupFacet">
+						<sfo:SmartForm binding="{path: 'groupFacet>Target', formatter: 'sap.ui.model.odata.AnnotationHelper.getNavigationPath'}">
+							<sfo:customData>
+								<core:CustomData key="defaultInputFieldDisplayBehaviour" value="descriptionAndId"/>
+							</sfo:customData>
+							<sfo:Group title = "">
+								<template:with helper="sap.ui.model.odata.AnnotationHelper.gotoEntitySet" path="groupFacet>Target" var="entitySet">
+									<template:with helper="sap.ui.model.odata.AnnotationHelper.resolvePath" path="groupFacet>Target" var="target">
+										<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.FieldGroup" type="XML"/>
+									</template:with>
+								</template:with>
+							</sfo:Group>
+						</sfo:SmartForm>
+					</template:repeat>
+				</template:else>
+			</template:if>
+		</template:then>
+		<template:else>
+			<template:with helper="sap.ui.model.odata.AnnotationHelper.gotoEntitySet" path="facet>Target" var="entitySet">
+				<template:with helper="sap.ui.model.odata.AnnotationHelper.resolvePath" path="facet>Target" var="target">
+					<sfo:SmartForm binding="{path: 'facet>Target', formatter: 'sap.ui.model.odata.AnnotationHelper.getNavigationPath'}"
+						class="sapMList" title="{path: 'facet>Label', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}">
+						<sfo:customData>
+							<core:CustomData key="defaultInputFieldDisplayBehaviour" value="descriptionAndId"/>
+						</sfo:customData>
+						<sfo:Group title = "" >
+							<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.FieldGroup" type="XML"/>
+						</sfo:Group>
+					</sfo:SmartForm>
+				</template:with>
+			</template:with>
+		</template:else>
+	</template:if>
+</core:FragmentDefinition>

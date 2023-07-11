@@ -1,0 +1,4 @@
+/*
+ * Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+ */
+sap.ui.define([],function(){"use strict";cross.fnd.fiori.inbox.util.oDataReadExtension={overrideRead:function(d){d.originalRead=d.read;d.read=function(p,P){var c=(p==="/TaskCollection")?true:false;var s=P.success;var C=function(a,r){var I=a.results;var f=d.extFnCustomGrouper;var b=d.extFnCustomSorter;var g=d.extSGroupingProperty;if(f||b){var G=[];var i=0;if(f||g){var o;var e;for(i=0;i<I.length;i++){if(e!==I[i][g]){e=I[i][g];o={GroupingValue:e,Elements:[]};G.push(o);}o.Elements.push(I[i]);}if(f){G.sort(f);}}else{G.push({GroupingValue:null,Elements:I});}if(b){for(i=0;i<G.length;i++){G[i].Elements.sort(b);}}I=[];for(i=0;i<G.length;i++){I=I.concat(G[i].Elements);}}a.results=I;r.data.results=I;s(a,r);};if(c)P.success=C;return this.originalRead(p,P);};}};return cross.fnd.fiori.inbox.util.oDataReadExtension;});

@@ -1,0 +1,36 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/resources/(.*)$",
+      "target": "/resources/$1",
+      "authenticationType": "none",
+      "destination": "ui5"
+    },
+    {
+      "source": "^/test-resources/(.*)$",
+      "target": "/test-resources/$1",
+      "authenticationType": "none",
+      "destination": "ui5"
+    },
+    {
+      "source": "^/sap/opu/odata/(.*)$",
+      "target": "/inbox/sap/opu/odata/$1",
+      "authenticationType": "none",
+      "destination": "mock_demos"
+    },   
+    {
+      "source": "^/mock/(.*)$",
+      "target": "/$1",
+      "authenticationType": "none",
+      "destination": "mock_demos"
+    },
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

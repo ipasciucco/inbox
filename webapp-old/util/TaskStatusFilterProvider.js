@@ -1,0 +1,4 @@
+/*
+ * Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+ */
+sap.ui.define(["sap/ui/base/Object","sap/ui/model/Filter","sap/ui/model/FilterOperator"],function(B,F,a){"use strict";B.extend("cross.fnd.fiori.inbox.util.TaskStatusFilterProvider",{});cross.fnd.fiori.inbox.util.TaskStatusFilterProvider={getAllFilters:function(o,s,f){if(!s){s=[];}s=s.slice(0);if(s.length===0){if(o){if(f!==null&&f!==undefined&&f[0]!==undefined){for(var i=0;i<f.length;i++){if(f[i].sPath==="CompletedOn"){s.push("COMPLETED");}if(f[i].sPath==="ResumeOn"){s.push("FOR_RESUBMISSION");}}}if(s.length===0){s.push("FOR_RESUBMISSION");s.push("COMPLETED");}}else{s.push("READY");s.push("RESERVED");s.push("IN_PROGRESS");s.push("EXECUTED");}}var S=[];for(var j=0;j<s.length;j++){var b=new F({path:"Status",operator:a.EQ,value1:s[j]});S.push(b);}if(S.length>0){return S;}}};return cross.fnd.fiori.inbox.util.TaskStatusFilterProvider;});

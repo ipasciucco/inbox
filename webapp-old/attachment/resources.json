@@ -1,0 +1,40 @@
+{
+	"_version": "1.1.0",
+	"resources": [
+		{
+			"name": "Component-dbg.js",
+			"size": 1023,
+			"isDebug": true
+		},
+		{
+			"name": "Component.js",
+			"size": 766
+		},
+		{
+			"name": "i18n/i18n.properties",
+			"size": 116
+		},
+		{
+			"name": "util/AttachmentFormatters-dbg.js",
+			"size": 5011,
+			"isDebug": true
+		},
+		{
+			"name": "util/AttachmentFormatters.js",
+			"size": 1653
+		},
+		{
+			"name": "view/Attachments-dbg.controller.js",
+			"size": 807,
+			"isDebug": true
+		},
+		{
+			"name": "view/Attachments.controller.js",
+			"size": 650
+		},
+		{
+			"name": "view/Attachments.view.xml",
+			"size": 1719
+		}
+	]
+}

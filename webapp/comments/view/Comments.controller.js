@@ -1,0 +1,4 @@
+/*
+ * Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+ */
+sap.ui.define(["sap/ui/core/mvc/Controller","sap/base/Log"],function(C,L){"use strict";return C.extend("cross.fnd.fiori.inbox.comments.view.Comments",{onInit:function(){var c=this.getOwnerComponent().getComponentData();this.oModel=c.oModel;this.bModelPresent=false;if(this.oModel||(c.oContainer&&c.oContainer.getPropagateModel())){this.bModelPresent=true;if(this.oModel){this.getView().setModel(this.oModel,"detail");}}if(!this.bModelPresent){L.error("Data Model not defined for Comments");}},publishEventForCommentsAdded:function(e){if(this.bModelPresent)this.getOwnerComponent().getEventBus().publish(null,"commentAdded",e);},publishEventForBusinessCard:function(e){this.getOwnerComponent().getEventBus().publish(null,"businessCardRequested",e);}});});

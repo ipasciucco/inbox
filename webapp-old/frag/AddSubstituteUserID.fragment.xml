@@ -1,0 +1,39 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<Dialog xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified"
+		contentWidth="320px" contentHeight="550px" beforeClose="onBeforeCloseDialogUserID" showHeader="false">
+	<NavContainer id="NAV_ADD_SUBST_USERID">
+		<Page id="date_selection" class="sapUiContentPadding" showNavButton="false" title="{i18n>substn.title.new}" backgroundDesign="List">
+			<l:VerticalLayout width="95%">
+				<Label text="{i18n>substnUserID.label.enter_user}" labelFor="ENTER_SUBST_INPUT_ID" />
+				<Input id="ENTER_SUBST_INPUT_ID" value="{userIdModel>/userID}" liveChange="onChangeSubstIdInput"/>
+				<Label text="{i18n>substn.table.duration}" design="Bold" class="sapUiSmallMarginTop" visible="{substitutionTypeModel>/data/bPlanned}"/>
+				<Label text="{userDataModel>/period}" visible="{substitutionTypeModel>/data/bPlanned}"/>
+			</l:VerticalLayout>
+			<content>
+				<FlexBox
+				visible="{substitutionTypeModel>/data/bPlanned}"
+          		alignItems="Center"
+          		justifyContent="Center">
+          			<items>
+	            		<u:Calendar id="selectionCalendar"
+		                     intervalSelection="true"
+		                     selectionMode="RANGE"             
+		             		 select="onChangeRange" 
+		             		 tapOnDate="onSingleDateSelection">
+	             		 </u:Calendar>
+          			</items>
+        		</FlexBox>
+            </content>
+        </Page>       
+	</NavContainer>
+	<beginButton>
+		<Button id="BTN_SAVE" text="{i18n>substn.create.save}" press="handleCreateSubstitutionPopOverSave"/>
+	</beginButton>
+	<endButton>
+    	<Button id="BTN_CANCEL" text="{i18n>substn.delete.cancel_button}" press="handleCreateSubstitutionPopOverCancel"/>
+	</endButton>
+</Dialog>

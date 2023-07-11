@@ -1,0 +1,77 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View
+		controllerName="cross.fnd.fiori.inbox.controller.AdditionalTaskDetails"
+		xmlns="sap.m"
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns:f="sap.f">
+
+	<f:DynamicPage
+		id="additionalTaskDetails"
+		class="sapUiNoContentPadding"
+		stickySubheaderProvider="tabBarAdditionalTaskDetails">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title
+						text="{i18n>AdditionalTaskDetailsView_Title}"/>
+				</f:heading>
+				<f:navigationActions>
+					<OverflowToolbarButton
+						id="enterFullScreenButton"
+						type="Transparent"
+						icon="sap-icon://full-screen"
+						press="handleFullScreen"
+						tooltip="{i18n>DetailDetailView_EnterFullScreenMode}"
+						visible="{parts: [{path: 'device>/system/phone'}, {path: 'fcl>/actionButtonsInfo/endColumn/fullScreen'}], formatter: '.formatter.enterExitFullScreenButtonsVisibility'}"/>
+					<OverflowToolbarButton
+						id="exitFullScreenButton"
+						type="Transparent"
+						icon="sap-icon://exit-full-screen"
+						press="handleExitFullScreen"
+						tooltip="{i18n>DetailDetailView_ExitFullScreenMode}"
+						visible="{parts: [{path: 'device>/system/phone'}, {path: 'fcl>/actionButtonsInfo/endColumn/exitFullScreen'}], formatter: '.formatter.enterExitFullScreenButtonsVisibility'}"/>
+					<OverflowToolbarButton
+						id="closeButton"
+						type="Transparent"
+						icon="sap-icon://decline"
+						press="handleClose"
+						tooltip="{i18n>DetailDetailView_CloseColumn}"
+						visible="{= ${fcl>/actionButtonsInfo/endColumn/closeColumn} !== null }"/>
+				</f:navigationActions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:content>
+			<IconTabBar
+				id="tabBarAdditionalTaskDetails"
+                busyIndicatorDelay="0"
+                expandable="false"
+                headerMode="Inline"
+                class="sapUiResponsivePadding--content sapUiResponsivePadding--header">
+					<items>	
+						<IconTabFilter
+							id="commentsIconTabFilter"
+							text="{i18n>CommentsLabel}"
+							count="0"
+							key="comments">
+						</IconTabFilter>	
+						<IconTabFilter
+							id="attachmentsIconTabFilter"
+							text="{i18n>AttachmentsLabel}"
+							count="0"
+							key="attachments">
+						</IconTabFilter>
+						<IconTabFilter
+							id="relatedObjectsIconTabFilter"
+							text="{i18n>RelatedObjectsLabel}"
+							count="0"
+							key="relatedObjects">
+						</IconTabFilter>
+					</items>
+			</IconTabBar>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

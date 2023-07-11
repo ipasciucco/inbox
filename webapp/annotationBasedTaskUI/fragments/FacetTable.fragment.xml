@@ -1,0 +1,33 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1"
+>
+	<template:with path="facet>Target" var="target">
+		<template:if test="{path: 'facet>Target', formatter: 'sap.ui.model.odata.AnnotationHelper.getNavigationPath'}">
+			<m:Table class="sapUiSmallMarginBottom" fixedLayout="false" growing="true" growingThreshold="50"
+				itemPress="onTableItemPressed" items="{path: 'facet>Target', formatter: 'sap.ui.model.odata.AnnotationHelper.getNavigationPath'}"
+				updateFinished="cross.fnd.fiori.inbox.annotationBasedTaskUI.util.util.onTableUpdateFinished" visible="false" contextualWidth="Auto" autoPopinMode="true">
+				<m:headerToolbar>
+					<m:Toolbar>
+						<m:Title
+							text="{path: 'facet>Label', formatter: 'sap.ui.model.odata.AnnotationHelper.format'} (0)"
+							level="H2" />
+					</m:Toolbar>
+				</m:headerToolbar>
+				<template:with helper="sap.ui.model.odata.AnnotationHelper.gotoEntitySet" path="facet>Target" var="listEntitySet">
+					<template:with helper="sap.ui.model.odata.AnnotationHelper.gotoEntityType" path="listEntitySet>entityType" var="listEntityType">
+						<template:with helper="sap.ui.model.odata.AnnotationHelper.resolvePath" path="target>" var="collection">
+							<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.ListColumns" type="XML"/>
+						</template:with>
+					</template:with>
+				</template:with>
+			</m:Table>
+		</template:if>
+	</template:with>
+</core:FragmentDefinition>

@@ -1,0 +1,47 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"
+	xmlns="sap.m" controllerName="cross.fnd.fiori.inbox.view.MultiSelectSummary"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>multi.summary.headerText}">
+		<content>
+			<Table id="idMultiSelectTable" inset="true" items="{path: ''}" mode="MultiSelect" selectionChange="onItemSelect">
+				<headerToolbar>
+					<OverflowToolbar id="tableToolbar">
+						<ToolbarSpacer id="toolbarSpacer" visible="{= !${device>/system/phone}}"/>
+						<OverflowToolbarButton icon="sap-icon://sort" id="sortBtn" press="onSortPressed" text="{i18n>sort.title}" tooltip="{i18n>sort.title}"/>
+						<OverflowToolbarButton enabled="{idMultiSelectTable>/personalizationActive}" icon="sap-icon://action-settings" id="personalizationBtn"
+							press="onPersonalizationPressed" text="{i18n>xbut.personalization}" tooltip="{i18n>xbut.personalization}"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column minScreenWidth="tablet" id="titleColumn">
+						<Text text="{i18n>multi.summary.title}"/>
+					</Column>
+					<Column minScreenWidth="tablet" id="createdByColumn">
+						<Text text="{i18n>multi.summary.createdBy}"/>
+					</Column>
+					<Column minScreenWidth="tablet" id="dueDateColumn">
+						<Text text="{i18n>multi.summary.dueDate}"/>
+					</Column>
+					<Column minScreenWidth="tablet" id="createdOnColumn" visible="false">
+						<Text text="{i18n>multi.summary.createdOn}" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem vAlign="Middle" id="LIST_ITEM" selected="{multiSelectSummaryModel>Selected}">
+						<cells>
+							<Text text="{parts: [{path: 'multiSelectSummaryModel>TaskTitle'}, {path: 'multiSelectSummaryModel>customtasktitle'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterTaskTitleMultiSelect'}"/>
+							<Text text="{parts: [{path: 'multiSelectSummaryModel>CreatedByName'}, {path: 'multiSelectSummaryModel>customcreatedbyname'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterCreatedByMultiSelect'}" />
+							<Text text="{path: 'multiSelectSummaryModel>CompletionDeadLine', type:'sap.ui.model.type.Date', formatOptions : { relative:'true'}}" />
+							<Text text="{path: 'multiSelectSummaryModel>CreatedOn', type:'sap.ui.model.type.Date', formatOptions : { style:'medium'}}" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+	</Page>
+</core:View>

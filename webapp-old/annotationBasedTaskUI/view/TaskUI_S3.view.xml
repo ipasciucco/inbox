@@ -1,0 +1,64 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View
+	controllerName="cross.fnd.fiori.inbox.annotationBasedTaskUI.view.TaskUI_S3"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1"
+>
+	<m:Page class="sapUiFioriObjectPage" showHeader="false">
+		<m:content>
+			<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.Header" type="XML"/>
+			<m:IconTabBar id="tabBar" select="handleTabSelect" expandable="false">
+				<m:items>
+					<template:repeat list="{meta>com.sap.vocabularies.UI.v1.Facets}" var="facet">
+						<template:if test="{path: 'facet>com.sap.vocabularies.UI.v1.IsSummary'}">
+							<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.InfoTab" type="XML"/>
+						</template:if>
+					</template:repeat>
+					<m:IconTabFilter count="{detail>/CommentsCount}" icon="sap-icon://notes" tooltip="{annoI18n>notes.tooltip}" key="NOTES"
+		                visible="{parts: [{path: 'detail>/TaskSupports/Comments'}, {path: 'detail>/SupportsComments'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterSupportsProperty'}">
+						<!-- @ExtensionPoint extInformation: Extends the note tab content -->
+						<core:ExtensionPoint name="CustomerExtensionForNoteTabContent">
+							<core:ComponentContainer id="commentsContainer" propagateModel="true"/>
+						</core:ExtensionPoint>
+					</m:IconTabFilter>
+					<m:IconTabFilter count="{detail>/AttachmentsCount}" icon="sap-icon://attachment" tooltip="{annoI18n>attachments.tooltip}" key="ATTACHMENTS"
+		                visible="{parts: [{path: 'detail>/TaskSupports/Attachments'}, {path: 'detail>/SupportsAttachments'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterSupportsProperty'}">
+						<core:ComponentContainer id="attachmentComponent"/>
+					</m:IconTabFilter>
+					<m:IconTabFilter icon="sap-icon://chain-link" tooltip="{annoI18n>relatedObjects.tooltip}" key="OBJECTLINKS"
+			                count="{detail>/ObjectLinksCount}"
+	                        visible="{ path: 'detail>/TaskSupports/TaskObject', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterVisibilityOfObjectIconTab' }">
+						<core:ExtensionPoint name="CustomerExtensionForObjectLinkTabContent">
+							<core:Fragment fragmentName="cross.fnd.fiori.inbox.frag.ObjectLinks" type="XML"/>
+						</core:ExtensionPoint>
+					</m:IconTabFilter>
+				</m:items>
+			</m:IconTabBar>
+			<l:HorizontalLayout class="sapUiSmallMargin"/>
+			<template:repeat list="{meta>com.sap.vocabularies.UI.v1.Facets}" var="facet">
+				<template:if test="{path: 'facet>Target', formatter: 'sap.ui.model.odata.AnnotationHelper.isMultiple'}">
+					<template:then>
+						<template:if test="{=${facet>Target/AnnotationPath}.indexOf('com.sap.vocabularies.UI.v1.LineItem') > -1}">
+							<template:then>
+								<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.FacetTable" type="XML"/>
+							</template:then>
+							<template:elseif test="{=${facet>Target/AnnotationPath}.indexOf('com.sap.vocabularies.Communication.v1.Contact') > -1}">
+								<!-- <core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.Contacts" type="XML"/> -->
+							</template:elseif>
+						</template:if>
+					</template:then>
+					<template:else>
+						<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.FacetForm" type="XML"/>
+					</template:else>
+				</template:if>
+			</template:repeat>
+		</m:content>
+	</m:Page>
+</mvc:View>

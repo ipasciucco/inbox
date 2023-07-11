@@ -1,0 +1,15 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition id="TaskSortDialogFragment" xmlns:core="sap.ui.core" xmlns="sap.m">
+	<ViewSettingsDialog confirm="onSortDialogConfirmed" id="multiselectSortingViewSettingsDialog">
+		<sortItems>
+			<ViewSettingsItem id="taskTitleSorter" key="TaskTitle" text="{i18n>multi.summary.title}"/>
+			<ViewSettingsItem id="createdBySorter" key="CreatedByName" text="{i18n>multi.summary.createdBy}"/>
+			<ViewSettingsItem id="dueDateSorter" key="CompletionDeadLine" text="{i18n>filter.dueDate}"/>
+			<ViewSettingsItem id="createdOnSorter" key="CreatedOn" text="{i18n>multi.summary.createdOn}"/>
+		</sortItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

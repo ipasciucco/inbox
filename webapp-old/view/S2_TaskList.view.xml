@@ -1,0 +1,119 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View controllerName="cross.fnd.fiori.inbox.view.S2_TaskList" id="S2_TaskListView" xmlns:core="sap.ui.core"
+	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:semantic="sap.m.semantic" xmlns="sap.m" busy="{mainView>/busy}" busyIndicatorDelay="{mainView>/delay}">
+	<semantic:FullscreenPage id="taskListPage" navButtonPress="onNavBack" showNavButton="true" title="{i18n>SHELL_TITLE}">
+		<semantic:content>
+			<!-- the count mode on the item binding is set to obtain the $count information for the Task collection -->
+			<Table class="sapUiResponsiveMargin" id="taskListTable" growing="true" 
+				items="{path:'taskList>/TaskCollection', sorter:[{path: 'TaskTitle', descending: false}], groupHeaderFactory:'.createGroupHeader'}"
+				 noDataText="{taskListView>/noDataText}" updateFinished="onUpdateFinished" width="auto"
+				 mode="MultiSelect" selectionChange="handleSelectionChange">
+				<headerToolbar>
+					<OverflowToolbar id="tableToolbar">
+						<Title id="taskListTitle" text="{taskListView>/taskListTitle}" visible="{= !${device>/system/phone}}"/>
+						<ToolbarSpacer id="toolbarSpacer" visible="{= !${device>/system/phone}}"/>
+						<OverflowToolbarButton icon="sap-icon://refresh" id="refreshBtn" press="onRefreshPressed" text="{i18n>XBUT_REFRESH}" tooltip="{i18n>XBUT_REFRESH}"/>
+						<OverflowToolbarButton icon="sap-icon://sort" id="sortBtn" press="onSortPressed" text="{i18n>sort.title}" tooltip="{i18n>sort.title}"/>
+						<OverflowToolbarButton icon="sap-icon://group-2" id="groupBtn" press="onGroupPressed" text="{i18n>group.dialog.title}" tooltip="{i18n>group.dialog.title}"/>
+						<OverflowToolbarButton enabled="{taskListView>/personalizationActive}" icon="sap-icon://action-settings" id="personalizationBtn"
+							press="onPersonalizationPressed" text="{i18n>xbut.personalization}" tooltip="{i18n>xbut.personalization}"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<!-- Columns must have unique IDs because table personalization service is used -->
+					<!-- Task Title -->
+					<Column demandPopin="true" hAlign="Begin" id="taskTitleColumn" width="{= !${device>/system/phone}? '22%' : '80%'}" popinDisplay="WithoutHeader">
+						<header>
+							<Label id="taskTitleLbl" text="{i18n>multi.summary.title}"/>
+						</header>
+					</Column>
+					<!-- Status -->
+					<Column demandPopin="true" hAlign="Center" id="statusColumn" minScreenWidth="Tablet" popinDisplay="WithoutHeader">
+						<header>
+							<Label id="statusLbl" text="{i18n>group.status}"/>
+						</header>
+					</Column>
+					<!-- Priority -->
+					<Column demandPopin="true" hAlign="Begin" id="priorityColumn" minScreenWidth="Tablet" popinDisplay="WithoutHeader">
+						<header>
+							<Label id="priorityLbl" text="{i18n>group.priority}"/>
+						</header>
+					</Column>
+					<!-- Created By -->
+					<Column demandPopin="true" hAlign="Begin" id="createdByColumn" minScreenWidth="Tablet" popinDisplay="WithoutHeader">
+						<header>
+							<Label id="createdByLbl" text="{i18n>multi.summary.createdBy}"/>
+						</header>
+					</Column>
+					<!-- Created On -->
+					<Column hAlign="Right" id="createdOnColumn" minScreenWidth="Tablet" popinDisplay="Inline">
+						<header>
+							<Label id="createdOnLbl" text="{i18n>view.Information.createdOn}"/>
+						</header>
+					</Column>
+					<!-- Completion Deadline -->
+					<Column demandPopin="true" hAlign="Right" id="dueDateColumn" minScreenWidth="Tablet" popinDisplay="Inline">
+						<header>
+							<Label id="dueDateLbl" text="{i18n>multi.summary.dueDate}"/>
+						</header>
+					</Column>
+					<!-- Add Button 
+					<Column demandPopin="true" hAlign="End" id="buttonColumn" minScreenWidth="Tablet" popinDisplay="WithoutHeader" width="15%">
+						<header>
+							<Label id="directActions" text="" visible="{= ${device>/system/phone}}"/>
+						</header>
+					</Column>
+					-->
+				</columns>
+				<items>
+					<ColumnListItem id="columnListItem" press="onTaskSelected" type="Navigation" vAlign="Middle">
+						<cells>
+							<!-- Task Title and Has Attachments indication -->
+							<ObjectIdentifier class="sapMTableContentMargin" 
+												id="taskTitleTxt" 
+												title="{parts: [{path: 'taskList>TaskTitle'}, {path: 'taskList>CustomAttributeData'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterTaskTitleTaskList'}"
+												titleActive="{parts: [{path: 'taskList>GUI_Link'}, {path: 'taskList>TaskSupports/UIExecutionLink'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterTaskTitleLink'}" 
+												titlePress="onTaskTitlePressed"/>
+							<!-- Status -->
+							<Text class="sapMTableContentMargin" id="statusTxt" maxLines="2" textAlign="Center"
+								text="{parts: [{path: 'taskList>SAP__Origin'}, {path: 'taskList>Status'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterStatus'}"/>
+							<!-- Priority -->
+							<ObjectStatus class="sapMTableContentMargin" id="PriorityTxt"
+								text="{parts: [{path: 'taskList>SAP__Origin'}, {path: 'taskList>Priority'}], formatter:'cross.fnd.fiori.inbox.Conversions.formatterPriority'}"
+								state="{path: 'taskList>Priority', formatter:'cross.fnd.fiori.inbox.Conversions.formatterPriorityState'}"/>
+							<!-- Created By -->
+							<Text class="sapMTableContentMargin" id="CreatedByTxt" maxLines="2" text="{parts: [{path: 'taskList>CreatedByName'}, {path: 'taskList>CustomAttributeData'}], formatter: 'cross.fnd.fiori.inbox.Conversions.formatterCreatedByTaskList'}"/>
+							<!-- Created On -->
+							<Text class="sapMTableContentMargin" id="CreatedOnTxt" maxLines="2" textAlign="Right"
+								text="{path: 'taskList>CreatedOn', formatter:'cross.fnd.fiori.inbox.Conversions.formatterDate'}"/>
+							<!-- Completion Deadline -->
+							<ObjectStatus class="sapMTableContentMargin" id="DueDateTxt"
+								text="{path: 'taskList>CompletionDeadLine', formatter:'cross.fnd.fiori.inbox.Conversions.formatterDate'}"
+								state="{path: 'taskList>CompletionDeadLine', formatter:'cross.fnd.fiori.inbox.Conversions.formatterDeadLineIndicatorState'}"/>
+							<!-- Add Button 
+							<Button class="sapMTableContentMargin" id="btnAddToCart" press="onAddToCartPressed" text="Approve" type="Accept"/>
+							-->
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+		<!-- positive action, add the content in controller -->
+		<semantic:positiveAction>
+		</semantic:positiveAction>
+		<!-- negative action, add the content in controller -->
+		<semantic:negativeAction>
+		</semantic:negativeAction>
+		<!-- other action buttons, ass the content in controller -->
+		<semantic:customFooterContent>
+		</semantic:customFooterContent>
+		<!--<semantic:messagesIndicator>
+			<semantic:MessagesIndicator id="taskListMessageIndicator" press="onMessagesButtonPress"/>
+		</semantic:messagesIndicator>-->
+	</semantic:FullscreenPage>
+</mvc:View>

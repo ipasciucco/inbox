@@ -1,0 +1,377 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View
+	controllerName="cross.fnd.fiori.inbox.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.f"
+	xmlns:footerbar="sap.ushell.ui.footerbar"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+
+	<IconTabBar
+		id="idIconTabBar"
+		items="{path:'filterTabsModel>/'}"
+		select="handleIconTabBarSelect"
+		expandable="false"
+		visible="{worklistView>/iconTabBarVisible}"
+		tabDensityMode="Inherit"
+		class="sapUiNoContentPadding">
+		<items>
+			<IconTabFilter
+				count="{path:'filterTabsModel>count'}"
+				icon="{path:'filterTabsModel>icon'}"
+				key="{path:'filterTabsModel>key'}"
+				showAll="{path:'filterTabsModel>showAll'}"
+				text="{path:'filterTabsModel>text'}"
+				tooltip="{path:'filterTabsModel>text'}"
+				design="Horizontal"
+				visible="{path:'filterTabsModel>visible'}">
+				<customData>
+					<core:CustomData 
+						key="filterTabsModelData" value="{filterTabsModel>}" writeToDom="false"/>
+				</customData>
+			</IconTabFilter>
+		</items>
+	</IconTabBar>
+	<f:DynamicPage
+		id="page"
+		toggleHeaderOnTitleClick="true"
+		class="sapUiNoContentPadding sapMyTasksDynamicPagePaddingBottom">
+		<!-- DynamicPage Title -->
+		<f:title>
+			<f:DynamicPageTitle stateChange="onDPTStateChange">
+				<f:heading>
+					<l:VerticalLayout>
+						<Title 
+							id="dynamicPageTitle"
+							text="{i18n>worklistViewTitle}"
+							titleStyle="H6">
+						</Title>
+						<Label id="filteredByLabel" text="{filter>/filteredByText}" tooltip="{filter>/filteredByText}" visible="{filter>/filterTextLabelVisible}"/>
+					</l:VerticalLayout>
+				</f:heading>
+				<f:actions>
+					<ToolbarSpacer/>
+					<Button id="refreshButton" text="{i18n>refreshButton}" press="onRefreshButtonPressed" enabled="{worklistView>/refreshButtonEnabled}"/>
+				</f:actions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<!-- DynamicPage Header -->
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<f:content>	
+					<fb:FilterBar
+							id="filterBar"
+							useToolbar="false"
+							showGoOnFB="true"
+							search="onFiltersGoPressed"
+							showRestoreButton="false"
+							filterContainerWidth="17.5rem"
+							showClearOnFB="true"
+							clear="onClearFilters">
+						
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem groupName="basic" name="search" visibleInFilterBar="true" label="{i18n>MASTER_PLACEHOLDER_SEARCHFIELD}">
+								<fb:control>
+									<SearchField id="searchField" tooltip="{worklistView>/worklistSearchTooltip}" search="onSearch" width="auto" placeholder="{worklistView>/searchFieldPlaceholder}" />
+								</fb:control>				
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem groupName="basic" id="taskDefinitionFGI" name="taskDefinition" visibleInFilterBar="true" label="{i18n>FilterCategory_TaskTypeColumnTitle}">
+								<fb:control>
+									<MultiComboBox id="taskDefinitionFilter" name="taskDefinition" items="{taskTypesModel>/}">
+										<items>
+											<core:Item text="{taskTypesModel>TaskDefinitionName}" key="TaskDefinitionID___EQ___{taskTypesModel>TaskDefinitionId}"/>
+										</items>
+									</MultiComboBox>				
+								</fb:control>				
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem groupName="basic" id="priorityFGI" name="priority" visibleInFilterBar="true" label="{i18n>FilterCategory_PriorityColumnTitle}">
+								<fb:control>
+									<MultiComboBox id="priorityFilter" items="{path: 'filter>/PriorityCollection', sorter: {path: 'rank',descending: false}, templateShareable:'true'}">
+										<core:Item key="{filter>priorityKey}" text="{filter>priorityText}"/>
+									</MultiComboBox>				
+								</fb:control>				
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem groupName="basic" id="statusFGI" name="status" visibleInFilterBar="true" label="{i18n>FilterCategory_StatusColumnTitle}">
+								<fb:control>
+									<MultiComboBox id="statusFilter" items="{path: 'filter>/StatusCollection', sorter: {path: 'rank', descending: false}, templateShareable:'true'}">
+										<core:Item key="{filter>statusKey}" text="{filter>statusText}"/>
+									</MultiComboBox>				
+								</fb:control>				
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem groupName="basic" id="creationdateFGI" name="creationdate" visibleInFilterBar="true" label="{i18n>filter.createdWithin}">
+								<fb:control>
+									<DateRangeSelection	id="creationdatedrs" delimiter="{path:'filter>/CreationDateDrs/delimiter'}"/>
+								</fb:control>				
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem groupName="basic" id="duedateFGI" name="duedate" visibleInFilterBar="true" label="{i18n>filter.dueby}">
+								<fb:control>
+									<DatePicker id="dueindp"/>
+								</fb:control>				
+							</fb:FilterGroupItem>
+						</fb:filterGroupItems>
+					</fb:FilterBar>		
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<!-- DynamicPage Content -->
+		<f:content>
+			<l:VerticalLayout>
+				<MessageStrip
+					id="connectionErrorMessage"
+					text="{worklistView>/connectionErrorMessage}"
+					type="Error"
+					showIcon="true"
+					showCloseButton="true"
+					visible="{worklistView>/connectionErrorMessageVisible}"
+					class="sapUiSmallMarginTop sapUiMediumMarginBeginEnd">
+				</MessageStrip>
+				<MessageStrip
+					id="caLimitInfo"
+					text="{worklistView>/tableCustomAttributeLimitInfoMessage}"
+					type="Information"
+					showIcon="true"
+					showCloseButton="true"
+					visible="{worklistView>/caLimitInfoVisible}"
+					class="sapUiSmallMarginTop sapUiMediumMarginBeginEnd">
+				</MessageStrip>
+				<MessageStrip
+					id="caFilteringInfo"
+					text="{worklistView>/caFilteringByOnlyForOneTaskTypeMessage}"
+					type="Information"
+					showIcon="true"
+					showCloseButton="true"
+					visible="{worklistView>/caFilteringInfoVisible}"
+					class="sapUiSmallMarginTop sapUiMediumMarginBeginEnd">
+				</MessageStrip>
+
+				<!--DO NOT DELETE THIS COMMENTED SECTION
+					Hide selection checkboxes because of JIRA: CENTRALINBOX-1828
+					Removed Table 'mode="MultiSelect"' -->
+				<Table
+					id="table"
+					class="sapUiMediumMargin"
+					visible="{worklistView>/tableVisible}"
+					selectionChange="handleSelectionChange"
+					popinLayout="GridSmall"
+					autoPopinMode="true"
+					width="auto"
+					sticky="HeaderToolbar,ColumnHeaders,InfoToolbar"
+					items="{
+						path: 'taskModel>/results',
+						sorter: {
+							path: 'CreatedOn',
+							descending: true
+						}
+					}"
+					noDataText="{worklistView>/tableNoDataText}"
+					busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+					growing="true"
+					growingScrollToLoad="true"
+					updateStarted="onUpdateStarted"
+					updateFinished="onUpdateFinished"
+					>
+
+					<headerToolbar>
+						<OverflowToolbar design="Solid">
+							<Title id="tableHeader" text="{worklistView>/worklistTableTitle}" class="sapUiTinyMarginBegin"/>
+							<ToolbarSpacer />
+							<!-- DO NOT DELETE THIS COMMENTED SECTION -->
+							<!-- Hide Claim and Release buttons because of JIRA: CENTRALINBOX-1828 -->
+							<!-- <Button
+								id="claimButton"
+								text="{i18n>claimButton}"
+								type="Transparent"
+								visible="false"
+								press="onClaimButtonPressed"/>
+							<Button
+								id="releaseButton"
+								text="{i18n>releaseButton}"
+								type="Transparent"
+								visible="false"
+								press="onReleaseButtonPressed"/> -->
+							<OverflowToolbarButton
+								id="sortButton"
+								icon="sap-icon://sort"
+								type="Transparent"
+								press="onSortButtonPressed"
+								text="{i18n>WorklistView_SortButton}" 
+								tooltip="{i18n>WorklistView_SortButton}">
+							</OverflowToolbarButton>								
+							<!-- Not used at the moment, but reserved for grouping functionality - do not delete
+							<OverflowToolbarButton	
+								id="group2Button"	
+								icon="sap-icon://group-2"
+								type="Transparent"	
+								press="onGroup2ButtonPressed"	
+								text="{i18n>WorklistView_GroupButton}" 	
+								tooltip="{i18n>WorklistView_GroupButton}">
+							</OverflowToolbarButton> -->	
+							<!-- Personalization button -->
+							<OverflowToolbarButton 
+								enabled="{taskListView>/personalizationActive}" 
+								icon="sap-icon://action-settings" 
+								id="PersoButton" 
+								press="_onPersoButtonPressed"
+								text="{i18n>WorklistView_PersonalizationButton}" 
+								tooltip="{i18n>WorklistView_PersonalizationButton}" 
+								type="Transparent">
+							</OverflowToolbarButton>
+						</OverflowToolbar>
+					</headerToolbar>
+					
+					<columns>
+						<Column id="nameColumn" width="{parametersModel>/widthNameColumn}" styleClass="sapUiTinyMarginBottom sapUiNoMarginTop">
+							<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>
+						</Column>
+						<Column id="priorityColumn" width="{parametersModel>/widthPriorityColumn}" hAlign="Left" demandPopin="true"
+							popinDisplay="Inline" minScreenWidth="Small" styleClass="sapUiTinyMarginBottom sapUiNoMarginTop">
+							<Text text="{i18n>tablePriorityColumnTitle}" id="priorityColumnTitle"/>
+						</Column>
+						<Column id="createdByColumn" visible="false" demandPopin="true" popinDisplay="Inline" minScreenWidth="XLarge" styleClass="sapUiTinyMarginBottom sapUiNoMarginTop">
+							<Text text="{i18n>tableCreatedByColumnTitle}" id="createdByColumnTitle"/>
+						</Column>
+						<Column id="statusColumn" minScreenWidth="XLarge" styleClass="sapUiTinyMarginBottom sapUiNoMarginTop">
+							<Text text="{i18n>tableStatusColumnTitle}" id="tableStatusColumnTitle"/>
+						</Column>
+						<Column id="createdOnColumn" hAlign="End" minScreenWidth="XLarge" styleClass="sapUiTinyMarginBottom sapUiNoMarginTop">
+							<Text text="{i18n>tableCreatedOnColumnTitle}" id="createdOnColumnTitle"/>
+						</Column>
+						<Column id="dueColumn" hAlign="End" demandPopin="true" popinDisplay="Inline" minScreenWidth="XLarge" styleClass="sapUiTinyMarginBottom sapUiNoMarginTop">
+							<Text text="{i18n>tableDueColumnTitle}" id="dueColumnTitle"/>
+						</Column>						
+						<Column id="actionsColumn" hAlign="Right" styleClass="sapUiTinyMarginBottom sapUiNoMarginTop" width="10rem">
+							<Text text="{i18n>tableActionsColumnTitle}" id="actionsColumnTitle" busy="{worklistView>/actionsColumnBusy}"/>
+						</Column>
+					</columns>
+		
+					<items>
+						<ColumnListItem
+							type="{worklistView>/columnListItemType}"
+							press="onPress"
+							class="sapMyTasksSmallPaddingTopBottom"
+							highlight="{
+										path: 'taskModel>Status',
+										formatter: '.formatter.formatHighlitByStatus'
+										
+									}">
+							<cells>
+								<ObjectIdentifier
+
+									title="{taskModel>TaskTitle}"
+									text="{
+											path: 'taskModel>SAP__Origin',
+											formatter: '.formatter.showDisplayName'
+									}"/>
+								<ObjectStatus
+									id="priorityValues"
+									text="{
+										path: 'taskModel>Priority',
+										formatter: '.formatter.priorityText'
+									}"
+									state="{ 
+										path: 'taskModel>Priority',
+										formatter: '.formatter.priorityStateOnDetail'
+									}"
+									tooltip="{
+										path: 'taskModel>Priority',
+										formatter: '.formatter.priorityText'
+									}"
+								>
+								</ObjectStatus>
+								<HBox 
+									id="createdByCells"
+									alignItems="Center">
+									<f:Avatar
+										initials="{
+											path: 'taskModel>CreatedByName',
+											formatter: '.formatter.initials'
+										}"
+										class="sapUiTinyMarginEnd"
+										backgroundColor="Accent7"
+										displaySize="XS"
+										visible="false">
+									</f:Avatar>
+									<Text
+										text="–">
+									</Text>
+									<!-- 
+										DO NOT DELETE 
+										the commented code should replace the static one above 
+										on a later stage because of JIRA CENTRALINBOX-1209
+									-->
+									<!--	visible="{parametersModel>/showCreatedByAvatar}">-->
+									<!--</f:Avatar>-->
+									<!--<Text-->
+									<!--	text="{taskModel>CreatedByName}">-->
+									<!--</Text>-->
+								</HBox>
+								<Text
+									text="{
+										path: 'taskModel>Status',
+										formatter: '.formatter.formatStatus'
+									}">
+								</Text>
+								<Text
+									text="{
+										path: 'taskModel>CreatedOn',
+										formatter: '.formatter.formatDate'
+									}">
+								</Text>
+								<ObjectStatus
+									id="completionDeadLineCells"
+									text="{
+										path: 'taskModel>CompletionDeadLine',
+										formatter: '.formatter.formatDate'
+									}"
+									state="{
+										path: 'taskModel>CompletionDeadLine',
+										formatter: '.formatter.dueState'
+									}">
+								</ObjectStatus>
+								<MenuButton
+									id="ResponseOptionsMenuButton"
+									buttonMode="Split"
+									defaultAction="onDefaultActionApprove"
+									useDefaultActionOnly="true"
+									tooltip="{taskModel>DefaultAction/DecisionText}"
+									visible="{= !!${taskModel>DefaultAction/DecisionText}}"
+									enabled="true"
+									width="8rem"
+									text="{taskModel>DefaultAction/DecisionText}"
+									>
+									<customData>
+										<core:CustomData
+											key="Task"
+											value="{taskModel>}">
+										</core:CustomData>
+									</customData>
+									<menu>
+										<Menu
+											itemSelected="onMenuAction"
+											items="{path: 'taskModel>ResponseOptions', templateShareable:false}"
+											id="ResponseOptionsMenu"
+											>
+											<items>
+												<MenuItem
+													text="{taskModel>DecisionText}"
+													key="{taskModel>DecisionKey}"
+													/>
+											</items>
+										</Menu>
+									</menu>
+								</MenuButton>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</l:VerticalLayout>
+		<!-- DynamicPage Content -->
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

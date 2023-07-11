@@ -1,0 +1,39 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="onTableOperationsDialogConfirmed" id="TableOperationsDialogID" 
+        groupDescending="true" filterSearchOperator="Contains"> 
+		<!--	
+			Notations
+			id	- Column names as defined in Worklist.view.xml + "Sort" or "Group" suffix
+			key	- Name taken same as the relevant property name from TCM model v1.1.	
+		-->
+		<sortItems>
+			<ViewSettingsItem id="priorityColumnSort" 	key="PriorityNumber"		text="{i18n>GroupAndSort_PriorityColumnTitle}"/>
+			<ViewSettingsItem id="nameColumnSort" 		key="TaskTitle"				text="{i18n>GroupAndSort_NameColumnTitle}"/>
+			<!-- CreatedByName option is hidden because of JIRA CENTRALINBOX-1085 -->
+			<!--<ViewSettingsItem id="createdByColumnSort"	key="CreatedByName" 		text="{i18n>GroupAndSort_CreatedByColumnTitle}"/>-->
+			<ViewSettingsItem id="statusColumnSort" 	key="Status"				text="{i18n>GroupAndSort_StatusColumnTitle}"/>
+			<ViewSettingsItem id="createdOnColumnSort" 	key="CreatedOn"				text="{i18n>GroupAndSort_CreatedOnColumnTitle}"/>
+			<ViewSettingsItem id="dueColumnSort"		key="CompletionDeadLine"	text="{i18n>GroupAndSort_DueColumnTitle}"/>
+		</sortItems>
+		
+		<!-- Not used at the moment, but reserved for grouping functionality - do not delete
+		<groupItems>	
+			<ViewSettingsItem id="priorityColumnGroup" 	key="PriorityNumber"		text="{i18n>GroupAndSort_PriorityColumnTitle}"/>	
+			 CreatedByName option is hidden because of JIRA CENTRALINBOX-1085 
+			<ViewSettingsItem id="createdByColumnGroup"	key="CreatedByName"			text="{i18n>GroupAndSort_CreatedByColumnTitle}"/>
+			<ViewSettingsItem id="statusColumnGroup" 	key="Status"				text="{i18n>GroupAndSort_StatusColumnTitle}"/>	
+			<ViewSettingsItem id="createdOnColumnGroup" key="CreatedOn"				text="{i18n>GroupAndSort_CreatedOnColumnTitle}"/>	
+			<ViewSettingsItem id="dueColumnGroup"		key="CompletionDeadLine"	text="{i18n>GroupAndSort_DueColumnTitle}"/>	
+		</groupItems> -->
+		
+
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

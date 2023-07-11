@@ -1,0 +1,18 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="cross.fnd.fiori.inbox.view.DetailDeepEmpty">
+	<Page id="cross.fnd.fiori.inbox.view.DetailDeepEmpty" title="{i18n>DETAIL_TITLE}">
+		<content>
+			<MessageStrip
+				id="messageStrip"
+				text="{/messageStripText}"
+				showIcon="true"
+				class="sapUiMediumMarginBeginEnd sapUiLargeMarginTop">
+			</MessageStrip>
+		</content>
+	</Page>
+</core:View>

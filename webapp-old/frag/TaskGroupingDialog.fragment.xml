@@ -1,0 +1,17 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition id="TaskGroupingDialogFragment" xmlns:core="sap.ui.core" xmlns="sap.m">
+	<ViewSettingsDialog confirm="onGroupingDialogConfirmed" id="groupingViewSettingsDialog">
+		<groupItems>
+			<ViewSettingsItem id="taskDefinitionGrouper" key="TaskDefinitionID" text="{i18n>group.taskType}"/>
+			<ViewSettingsItem id="statusGrouper" key="Status" text="{i18n>group.status}"/>
+			<ViewSettingsItem id="priorityGrouper" key="PriorityNumber" text="{i18n>group.priority}"/>
+			<ViewSettingsItem id="dueDateGrouper" key="CompletionDeadLine" text="{i18n>filter.dueDate}"/>
+			<ViewSettingsItem id="createdByGrouper" key="CreatedBy" text="{i18n>multi.summary.createdBy}"/>
+			<ViewSettingsItem id="creationDateGrouper" key="CreatedOn" text="{i18n>view.Information.createdOn}"/>
+		</groupItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

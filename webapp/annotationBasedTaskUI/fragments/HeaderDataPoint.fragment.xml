@@ -1,0 +1,39 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:sfo="sap.ui.comp.smartform"
+	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1"
+>
+	<template:if test="{dataPoint>}">
+		<m:ObjectStatus
+			text="{path: 'dataPoint>Value', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}"
+			title="{path: 'dataPoint>Title', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}"
+			state="{path: 'dataPoint>InboxState', formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.formatValueStateExpression'}"
+			active="{path: 'dataPoint>', formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.util.hasDetails'}"
+			press="onShowDataPointDetails"
+			>
+			<m:dependents>
+				<template:if test="{path: 'dataPoint>', formatter: 'cross.fnd.fiori.inbox.annotationBasedTaskUI.util.util.hasDetails'}">
+					<m:ResponsivePopover title="{path: 'dataPoint>InboxDetailsTitle', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}" placement="Bottom">
+						<m:content>
+							<sfo:SmartForm binding="{path: 'dataPoint>InboxDetails', formatter: 'sap.ui.model.odata.AnnotationHelper.getNavigationPath'}">
+								<sfo:Group title = "">
+									<template:with helper="sap.ui.model.odata.AnnotationHelper.gotoEntitySet" path="dataPoint>InboxDetails" var="entitySet">
+										<template:with helper="sap.ui.model.odata.AnnotationHelper.resolvePath" path="dataPoint>InboxDetails" var="target">
+											<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.FieldGroup" type="XML"/>
+										</template:with>
+									</template:with>
+								</sfo:Group>
+							</sfo:SmartForm>
+						</m:content>
+					</m:ResponsivePopover>
+				</template:if>
+			</m:dependents>
+		</m:ObjectStatus>
+	</template:if>
+</core:FragmentDefinition>

@@ -1,0 +1,24 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<Dialog xmlns="sap.m" xmlns:core="sap.ui.core"
+contentWidth="400px" contentHeight="650px" beforeClose="onBeforeCloseDialog" showHeader="false">
+	<Page id="search_createdby_page" showNavButton="false" navButtonPress="onNavBack" title="{i18n>multi.summary.createdBy}">
+		<subHeader>
+			<Toolbar>
+				<SearchField id="search_createdby_field" search="onSearchOfCreatedBy" width="100%" liveChange="handleLiveChange"/>
+			</Toolbar>
+		</subHeader>
+		<content>
+			<core:Fragment fragmentName="cross.fnd.fiori.inbox.frag.UserPicker" type="XML" />
+		</content>
+	</Page>
+	<beginButton>
+			<Button id="BTN_OK_CREATEDBY" text="{i18n>XBUT_OK}" press="handleCreatedByPopOverOk"/>
+	</beginButton>
+	<endButton>
+		<Button id="BTN_CANCEL_CREATEDBY" text="{i18n>XBUT_CANCEL}" press="handleCreatedByPopOverCancel"/>
+	</endButton>
+</Dialog>

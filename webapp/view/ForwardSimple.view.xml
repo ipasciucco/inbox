@@ -1,0 +1,73 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View 
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:f="sap.ui.layout.form"
+	controllerName="cross.fnd.fiori.inbox.view.ForwardSimple" xmlns:html="http://www.w3.org/1999/xhtml"
+	resourceBundleName="sap.ca.ui.i18n.i18n" resourceBundleAlias="ca_i18n"
+>
+
+	<Dialog 
+		id="DLG_FORWARD_SIMPLE" 
+		title="{i18n>XTIT_FORWARD}" 
+		contentWidth="440px"
+		beforeOpen="onBeforeOpenDialog"
+	>
+	
+	<content>
+		<f:SimpleForm id="SimpleForwardForm"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			adjustLabelSpan="false"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label 
+					text="{i18n>XTIT_FORWARD_TO}"
+					labelFor="IFD_TARGET_USER"
+					required="true"
+				/>
+				<Input
+					id="IFD_TARGET_USER"
+					type="Text"
+					tooltip="{i18n>XMSG_FORWARD_USER_ID}"
+					placeholder="{i18n>XMSG_FORWARD_USER_ID}"
+				/>
+
+				<Label 
+					text="{i18n>XTIT_NOTE}"
+					labelFor="confirmDialogTextarea"
+				/>
+				<TextArea 	
+					id="confirmDialogTextarea"
+					maxLength="10000"
+					width="100%"
+					rows="5"
+					tooltip="{i18n>XMSG_COMMENT_OPTIONAL}"
+					placeholder="{i18n>XMSG_COMMENT_OPTIONAL}"
+				/>
+			</f:content>
+		</f:SimpleForm>
+	</content>
+
+		<beginButton>
+			<Button 
+				press="onForward" 
+				text="{i18n>XBUT_FORWARD}" 
+				tooltip="{i18n>XBUT_FORWARD}"
+			/>
+		</beginButton>
+		<endButton>
+			<Button 
+				press="onCancel" 
+				text="{ca_i18n>dialog.cancel}" 
+				tooltip="{i18n>close.userdialog}"
+			/>
+		</endButton>
+		
+	</Dialog>
+</core:View>

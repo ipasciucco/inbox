@@ -1,0 +1,26 @@
+<!--
+
+    Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<Dialog xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+		contentWidth="400px" contentHeight="400px" beforeClose="onBeforeCloseDialog" showHeader="true" 
+		title="{i18n>dialog.resubmit.calendar.title}">
+		<content>
+			<FlexBox
+				alignItems="Center"
+				justifyContent="Center">
+				<items>
+					<u:Calendar id="DATE_RESUBMIT" singleSelection = "true" select = "cross.fnd.fiori.inbox.util.Resubmit.validateDate">
+					</u:Calendar>
+				</items>
+			</FlexBox>
+		</content>
+		<beginButton>
+			<Button id="RESUBMIT_BTN_OK" enabled= "false" text="{i18n>XBUT_RESUBMIT}" press="handleResubmitPopOverOk"/>
+		</beginButton>
+		<endButton>
+        	<Button id="RESUBMIT_BTN_CANCEL"  text="{i18n>XBUT_CANCEL}" press="cross.fnd.fiori.inbox.util.Resubmit.close"/>
+		</endButton>
+</Dialog>
+
