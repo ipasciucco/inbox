@@ -3,10 +3,10 @@
  */
 sap.ui.define([
 	"cross/fnd/fiori/inbox/util/tools/ButtonListHelper",
-	"sap/m/library"
+	"sap/m/library", "sap/m/MessageToast"
 	], function(
 		ButtonListHelper,
-		library
+		library, MessageToast
 	) {
 		"use strict";
 
@@ -21,11 +21,15 @@ sap.ui.define([
 							switch (oBtnMeta.nature) {
 								case "POSITIVE":
 									oBtnMeta.style = ButtonType.Accept;
+									console.log("entra")
+									MessageToast.show("Aprobación exitosa");
 									break;
 								case "NEGATIVE":
 									oBtnMeta.style = ButtonType.Reject;
+									MessageToast.show("Rechazado");
 								default:
 							}
+							console.log("sale")
 							return cross.fnd.fiori.inbox.util.tools.ButtonListHelper.prototype.originalEnsureButton.apply(this, arguments);
 						};
 					}

@@ -2658,7 +2658,9 @@ sap.ui.define([
 				title: this.i18nBundle.getText("XTIT_SUBMIT_CONFIRM"),
 				confirmButtonLabel: this.i18nBundle.getText("XBUT_CONFIRM"),
 				confirmActionHandler: function(oItem, sNote) {
+
 					this.sendAction(sFunctionImportName, oItem, sNote);
+					sap.m.MessageToast.show("llega");
 				}.bind(this, oItem)
 			});
 		},
@@ -2701,51 +2703,80 @@ sap.ui.define([
 						var oItem = this.oModel2.getData();
 						var oCommentsControl = this._getIconTabControl("Comments");
 						this._setBusyIncdicatorOnDetailControls(oCommentsControl, true);
-						this.oDataManager.addComment(oItem.SAP__Origin, oItem.InstanceID, sNote,
-						function(data, response) {
+						// this.oDataManager.addComment(oItem.SAP__Origin, oItem.InstanceID, sNote,
+						// function(data, response) {
 
-							// update the comments data and comments count
-							if (oItem.Comments && oItem.Comments.results) {
-								oItem.Comments.results.unshift(data);
+						// 	// update the comments data and comments count
+						// 	if (oItem.Comments && oItem.Comments.results) {
+						// 		oItem.Comments.results.unshift(data);
+						// 	}
+						// 	else {
+						// 		oItem.Comments = {
+						// 			results: [data]
+						// 		};
+						// 	}
+						// 	oItem.CommentsCount = oItem.Comments.results.length;
+						// 	this._setBusyIncdicatorOnDetailControls(oCommentsControl, false);
+						// 	this._updateDetailModel(oItem);
+
+						// 	setTimeout(function() {
+						// 		MessageToast.show(that.i18nBundle.getText(sSuccessMessage));
+						// 	}, 500, this);
+
+						// 	// update the counter on history tab
+						// 	//this.fnCountUpdater("ProcessingLogs", oItem.SAP__Origin, oItem.InstanceID);
+						// }.bind(this),
+						// function(oError) {
+						// 	this._setBusyIncdicatorOnDetailControls(oCommentsControl, false);
+						// }.bind(this));
+
+						//agregar comentario sin tocar el odata (Solo vista)
+						var data = {
+							CreatedAt: new Date(),
+							CreatedBy: "S_PSILVEIRA",
+							CreatedByDetails: { 
+								__deferred: {
+									uri: "https://vhpaaqvkci.sap.cap.cl:44300/sap/opu/odata/IWPGW/TASKPROCESSING;mo;v=2/CommentCollection(SAP__Origin='LOCAL_TGW',InstanceID='000021313842',ID='t-FOL33000000000004RAW48000000985682')/CreatedByDetails"
+								} 
+							},
+							CreatedByName: "PABLO SILVEIRA",
+							ID: "t-FOL33000000000004RAW48000000985682",
+							InstanceID: "000021313842",
+							SAP__Origin: "LOCAL_TGW",
+							Text: sNote,
+							__metadata: {
+								id: "https://vhpaaqvkci.sap.cap.cl:44300/sap/opu/odata/IWPGW/TASKPROCESSING;mo;v=2/CommentCollection(SAP__Origin='LOCAL_TGW',InstanceID='000021313842',ID='t-FOL33000000000004RAW48000000985682')",
+								uri: "https://vhpaaqvkci.sap.cap.cl:44300/sap/opu/odata/IWPGW/TASKPROCESSING;mo;v=2/CommentCollection(SAP__Origin='LOCAL_TGW',InstanceID='000021313842',ID='t-FOL33000000000004RAW48000000985682')",
+								type: 'TASKPROCESSING.Comment'
 							}
-							else {
-								oItem.Comments = {
-									results: [data]
-								};
-							}
-							oItem.CommentsCount = oItem.Comments.results.length;
-							this._setBusyIncdicatorOnDetailControls(oCommentsControl, false);
-							this._updateDetailModel(oItem);
-
-							setTimeout(function() {
-								MessageToast.show(that.i18nBundle.getText(sSuccessMessage));
-							}, 500, this);
-
-							// update the counter on history tab
-							//this.fnCountUpdater("ProcessingLogs", oItem.SAP__Origin, oItem.InstanceID);
-						}.bind(this),
-						function(oError) {
-							this._setBusyIncdicatorOnDetailControls(oCommentsControl, false);
-						}.bind(this));
+						}
+						oItem.Comments.results.unshift(data);
+						oItem.CommentsCount = oItem.Comments.results.length;
+						this.oModel2.setData(oItem);
+						this._setBusyIncdicatorOnDetailControls(oCommentsControl, false);
 
 						break;
 					}
 				default:
 					{
-						this.oDataManager.sendAction(sFunctionImportName, oDecision, sNote, sReasonOptionCode,
-							function(oData) {
-								setTimeout(function() {
-									var sMessage = that.i18nBundle.getText(sSuccessMessage);
-									if (that._getStandaloneDetailDeep() && that.getView().getModel().bCheckPassed) {
-										that.getView().getModel().sDetailDeepEmptyMessage = sMessage + ". " + that.i18nBundle.getText("detailDeepEmptyView.closingTabMessage");
-										MessageToast.show(sMessage, {duration: 1000, onClose: that.oRouter.navTo.bind(that.oRouter, "detail_deep_empty", null, false)});
-									}
-									else {
-										MessageToast.show(sMessage);
-									}
-								}, 500);
-							}.bind(this, oDecision)
-						);
+						//this.oDataManager.sendAction(sFunctionImportName, oDecision, sNote, sReasonOptionCode,
+							MessageToast.show("Tarea procesada correctamente");
+							// function(oData) {
+							
+							// 	setTimeout(function() {
+							// 		var sMessage = that.i18nBundle.getText(sSuccessMessage);
+							// 		MessageToast.show("Que paso che");
+							// 		if (that._getStandaloneDetailDeep() && that.getView().getModel().bCheckPassed) {
+							// 			that.getView().getModel().sDetailDeepEmptyMessage = sMessage + ". " + that.i18nBundle.getText("detailDeepEmptyView.closingTabMessage");
+							// 			MessageToast.show(sMessage, {duration: 1000, onClose: that.oRouter.navTo.bind(that.oRouter, "detail_deep_empty", null, false)});
+							// 		}
+							// 		else {
+                            //          MessageToast.show("Que paso che");
+							// 			//MessageToast.show(sMessage);
+							// 		}
+							// 	}, 500);
+							// }.bind(this, oDecision)
+					//	);
 					}
 			}
 		},
