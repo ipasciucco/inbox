@@ -324,7 +324,7 @@
 				},
 				"sap.ca.ui": {
 					"minVersion": "",
-					"lazy": false
+					"lazy": true
 				},
 				"sap.ui.core": {
 					"lazy": false

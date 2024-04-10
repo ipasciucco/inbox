@@ -3,7 +3,7 @@
     Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
 
 -->
-<core:View controllerName="cross.fnd.fiori.inbox.attachment.view.Attachments"
+<!-- <core:View controllerName="cross.fnd.fiori.inbox.attachment.view.Attachments"
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core">
 
@@ -31,5 +31,30 @@
 	</items>
 	<parameters/>
 </UploadCollection>
+
+</core:View> -->
+
+<core:View controllerName="cross.fnd.fiori.inbox.attachment.view.Attachments" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:upload="sap.m.upload">
+
+	<upload:UploadSet id="uploadCollection" items="{detail>/Attachments/results}" uploadEnabled="{path: 'detail>/TaskSupports/AddAttachments', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterEnableUpload'}"  uploadComplete="onAttachmentUploadComplete" fileDeleted="onAttachmentDeleted" selectionChanged="onAttachmentChange" sameFilenameAllowed="true">
+		<upload:items>
+			<upload:UploadSetItem
+				contributor="{detail>CreatedByName}"
+				documentId="{detail>ID}" 
+				fileName="{parts: [{path: 'detail>FileName'}, {path: 'detail>LinkDisplayName'}, {path: 'detail>mime_type'}], formatter:'cross.fnd.fiori.inbox.attachment.formatFileName'}"
+				mediaType="{detail>mime_type}"
+				thumbnailUrl="{parts: [{path: 'detail>Link'}, {path: 'detail>mime_type'}], formatter: 'cross.fnd.fiori.inbox.attachment.getRelativeSapIcon'}"
+				uploadedDate="{path: 'detail>CreatedAt', formatter: 'cross.fnd.fiori.inbox.attachment.formatAttachmentCreatedAtDate'}"
+				url="{parts: [{path: 'detail>__metadata/media_src'}, {path: 'detail>Link'}, {path: 'detail>mime_type'}] , formatter: 'cross.fnd.fiori.inbox.attachment.getRelativeMediaSrc'}"
+				enabledEdit="false"
+				visibleEdit="false"			
+				visibleRemove = "{detail>AttachmentSupports/Delete}">
+				
+				<!-- <upload:statuses> -->
+				<ObjectAttribute text="{parts: [{path: 'detail>FileSize'}, {path: 'detail>Link'}, {path: 'detail>mime_type'}], formatter:'cross.fnd.fiori.inbox.attachment.formatFileSize'}"/>
+				<!-- </upload:statuses> -->
+			</upload:UploadSetItem>	
+		</upload:items>
+	</upload:UploadSet>
 
 </core:View>

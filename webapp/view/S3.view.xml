@@ -163,6 +163,13 @@
 										</core:ExtensionPoint>
 									</content>
 								</IconTabFilter>
+								<IconTabFilter id="Historial" text="Historial" tooltip="{i18n>tasklog.tooltip}"
+												visible="{path: 'detail>/TaskSupports/ProcessingLogs', formatter: 'cross.fnd.fiori.inbox.Conversions.formatterLogTaskSupportsProperty'}"
+												key="HISTORIAL">
+									<content>
+										<Text text="Historial"/>
+									</content>
+								</IconTabFilter>
 							</items>
 					</IconTabBar>
 

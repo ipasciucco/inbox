@@ -19,6 +19,12 @@
       "target": "/inbox/sap/opu/odata/$1",
       "authenticationType": "none",
       "destination": "mock_demos"
+    },
+    {
+      "source": "^/sap/opu/odata/sap/(.*)$",
+      "target": "/inbox/sap/opu/odata/$1",
+      "authenticationType": "none",
+      "destination": "mock_demos"
     },   
     {
       "source": "^/mock/(.*)$",
