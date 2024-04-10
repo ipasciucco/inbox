@@ -3,8 +3,9 @@
  */
 sap.ui.define([
 		"sap/ui/core/mvc/Controller",
-		"sap/base/Log"
-	], function (Controller, Log) {
+		"sap/base/Log",
+		"sap/ui/model/json/JSONModel"
+	], function (Controller, Log, JSONModel) {
 		"use strict";
 
 	/*
@@ -30,6 +31,8 @@ sap.ui.define([
 				if (!this.bModelPresent) { // if model is not propagated and not passed as component data, log an error in the console
 					Log.error("Data Model not defined for Comments");
 				}
+
+				
 			},
 
 			//Fire a custom event after adding comment

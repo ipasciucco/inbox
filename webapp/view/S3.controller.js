@@ -2660,6 +2660,7 @@ sap.ui.define([
 				confirmActionHandler: function(oItem, sNote) {
 
 					this.sendAction(sFunctionImportName, oItem, sNote);
+					sap.m.MessageToast.show("llega");
 				}.bind(this, oItem)
 			});
 		},
