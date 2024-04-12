@@ -85,7 +85,7 @@ sap.ui.define([
 					preprocessors: {
 						xml: {
 							bindingContexts: {
-								meta: oModels.businessMetaModel.getMetaContext(sBindingPath)
+								meta: this._decodeJSON(oModels,sBindingPath)
 							},
 							models: {
 								meta: oModels.businessMetaModel
@@ -129,6 +129,9 @@ sap.ui.define([
 				} else {
 					BusyIndicator.hide();
 				}
+				//Only for demo purpose
+				if(sap.ui.getCore().byId("__text46") && sap.ui.getCore().byId("__text46").getText() === "DistribuciÃ³n")
+					sap.ui.getCore().byId("__text46").setText("Distribución");
 			}.bind(this));
 
 			return this.oViewContainer;
@@ -388,6 +391,45 @@ sap.ui.define([
 			var sSapOrigin = oTcmModel.getProperty("/SAP__Origin");
 			var sTaskInstanceID = oTcmModel.getProperty("/InstanceID");
 			oDataManager.fnUpdateSingleTask(sSapOrigin, sTaskInstanceID);
+		},
+
+		//Only for demo purpose.
+		_decodeJSON: function(oModels, sBindingPath) {
+			const metadata = oModels.businessMetaModel.getMetaContext(sBindingPath);
+			const namespace = metadata.oModel.oModel.oData.dataServices.schema[0].namespace;
+		
+			if (namespace === "C_PURREQUISITIONITEM_FS_SRV") {
+				this._decodeEntity(metadata.oModel.oModel.oData.dataServices.schema[0].entityType[4]);
+				this._decodeEntity(metadata.oModel.oModel.oData.dataServices.schema[0].entityType[2]);
+			}
+		
+			if (namespace === "C_PURCHASEORDER_FS_SRV") {
+				this._decodeEntity(metadata.oModel.oModel.oData.dataServices.schema[0].entityType[7]);
+				this._decodeEntity(metadata.oModel.oModel.oData.dataServices.schema[0].entityType[11]);
+				this._decodeEntity(metadata.oModel.oModel.oData.dataServices.schema[0].entityType[14]);
+			}
+		
+			return metadata;
+		},
+		
+		_decodeEntity: function(entity) {
+			entity["com.sap.vocabularies.UI.v1.Facets"].forEach(field => {
+				if ("Label" in field) field.Label.String = this._decodeString(field.Label.String);
+				if ("Facets" in field) field.Facets.forEach(facet => {
+					if (facet.Label) facet.Label.String = this._decodeString(facet.Label.String);
+				});
+			});
+		
+			entity.property.forEach(property => {
+				if (property["com.sap.vocabularies.Common.v1.Label"])
+					property["com.sap.vocabularies.Common.v1.Label"].String = this._decodeString(property["com.sap.vocabularies.Common.v1.Label"].String);
+				if (property["com.sap.vocabularies.Common.v1.QuickInfo"])
+					property["com.sap.vocabularies.Common.v1.QuickInfo"].String = this._decodeString(property["com.sap.vocabularies.Common.v1.QuickInfo"].String);
+			});
+		},
+		
+		_decodeString: function(str) {
+			return decodeURIComponent(escape(decodeURIComponent(str)));
 		}
 	});
 
