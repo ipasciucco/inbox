@@ -396,36 +396,50 @@ sap.ui.define([
 		//Only for demo purpose.
 		_decodeJSON: function(oModels, sBindingPath) {
 			const metadata = oModels.businessMetaModel.getMetaContext(sBindingPath);
-			const namespace = metadata.oModel.oModel.oData.dataServices.schema[0].namespace;
+			const schema = metadata.oModel.oModel.oData.dataServices.schema[0];
 		
-			if (namespace === "C_PURREQUISITIONITEM_FS_SRV") {
-				this._decodeEntity(metadata.oModel.oModel.oData.dataServices.schema[0].entityType[4]);
-				this._decodeEntity(metadata.oModel.oModel.oData.dataServices.schema[0].entityType[2]);
+			if (schema.namespace === "C_PURREQUISITIONITEM_FS_SRV") {
+				this._decodeEntityType(schema.entityType[4]);
+				this._decodeEntityType(schema.entityType[2]);
 			}
 		
-			if (namespace === "C_PURCHASEORDER_FS_SRV") {
-				this._decodeEntity(metadata.oModel.oModel.oData.dataServices.schema[0].entityType[7]);
-				this._decodeEntity(metadata.oModel.oModel.oData.dataServices.schema[0].entityType[11]);
-				this._decodeEntity(metadata.oModel.oModel.oData.dataServices.schema[0].entityType[14]);
+			if (schema.namespace === "C_PURCHASEORDER_FS_SRV") {
+				this._decodeEntityType(schema.entityType[7]);
+				this._decodeEntityType(schema.entityType[11]);
+				this._decodeEntityType(schema.entityType[14]);
 			}
 		
 			return metadata;
 		},
 		
-		_decodeEntity: function(entity) {
-			entity["com.sap.vocabularies.UI.v1.Facets"].forEach(field => {
-				if ("Label" in field) field.Label.String = this._decodeString(field.Label.String);
-				if ("Facets" in field) field.Facets.forEach(facet => {
-					if (facet.Label) facet.Label.String = this._decodeString(facet.Label.String);
+		_decodeEntityType: function(entityType) {
+			if (entityType["com.sap.vocabularies.UI.v1.Facets"]) {
+				entityType["com.sap.vocabularies.UI.v1.Facets"].forEach(field => {
+					this._decodeFacet(field);
 				});
-			});
+			}
 		
-			entity.property.forEach(property => {
-				if (property["com.sap.vocabularies.Common.v1.Label"])
-					property["com.sap.vocabularies.Common.v1.Label"].String = this._decodeString(property["com.sap.vocabularies.Common.v1.Label"].String);
-				if (property["com.sap.vocabularies.Common.v1.QuickInfo"])
-					property["com.sap.vocabularies.Common.v1.QuickInfo"].String = this._decodeString(property["com.sap.vocabularies.Common.v1.QuickInfo"].String);
+			entityType.property.forEach(property => {
+				this._decodeProperty(property);
 			});
+		},
+		
+		_decodeFacet: function(facet) {
+			if ("Label" in facet) facet.Label.String = this._decodeString(facet.Label.String);
+			if ("Facets" in facet) {
+				facet.Facets.forEach(facet => {
+					this._decodeFacet(facet);
+				});
+			}
+		},
+		
+		_decodeProperty: function(property) {
+			if (property["com.sap.vocabularies.Common.v1.Label"] && property["com.sap.vocabularies.Common.v1.Label"].String !== "% dto.pronto pago 1") {
+				property["com.sap.vocabularies.Common.v1.Label"].String = this._decodeString(property["com.sap.vocabularies.Common.v1.Label"].String);
+			}
+			if (property["com.sap.vocabularies.Common.v1.QuickInfo"]) {
+				property["com.sap.vocabularies.Common.v1.QuickInfo"].String = this._decodeString(property["com.sap.vocabularies.Common.v1.QuickInfo"].String);
+			}
 		},
 		
 		_decodeString: function(str) {
