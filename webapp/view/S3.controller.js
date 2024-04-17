@@ -2163,7 +2163,7 @@ sap.ui.define([
 				}
 
 				// add the forward button
-				if (that.fnFormatterSupportsProperty(oItem.TaskSupports.Forward, oItem.SupportsForward)) {
+				if (false && that.fnFormatterSupportsProperty(oItem.TaskSupports.Forward, oItem.SupportsForward)) {
 					iDisplayOrderPriorityValue = 1500 + iDisplayOrderPriorityTemp;
 					iDisplayOrderPriorityTemp++;
 					aButtonList.push({
@@ -2174,7 +2174,7 @@ sap.ui.define([
 				}
 
 				// add the resubmit button
-				if (oItem.TaskSupports) { // If task does not support TaskSupports
+				if (false && oItem.TaskSupports) { // If task does not support TaskSupports
 					if (oItem.TaskSupports.Resubmit) {
 						iDisplayOrderPriorityValue = 1500 + iDisplayOrderPriorityTemp;
 						iDisplayOrderPriorityTemp++;
@@ -2300,7 +2300,7 @@ sap.ui.define([
 				}
 
 				//add the resume button if the task is suspended
-				if (oItem.TaskSupports.CancelResubmission) {
+				if (false && oItem.TaskSupports.CancelResubmission) {
 					iDisplayOrderPriorityValue = 1500 + iDisplayOrderPriorityTemp;
 					iDisplayOrderPriorityTemp++;
 					aButtonList.push({

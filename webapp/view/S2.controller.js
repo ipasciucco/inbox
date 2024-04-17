@@ -3302,6 +3302,8 @@ sap.ui.define([
 			oList.setNoDataText(sNoDataText);
 			var oModel = this.getView().getModel();
 			var sReason = oEvent.getParameter("reason");
+			this._clearSelection();
+			this.getList().removeSelections(true);
 
 			// Refresh the selected task also if the task model is getting refreshed
 			if (sReason == "Refresh" && oList.getSelectedItem()) {
@@ -3327,8 +3329,9 @@ sap.ui.define([
 			// or if its a deep linking URL and the list has been loaded
 			if (!(this.isMultiSelectActive() && oEvent.getParameter("reason") == "Growing") &&
 				(this.isActionPerformed || (this.oDataManager.getCallFromDeepLinkURL() && oEvent.getSource().getItems().length>0) || oEvent.getParameter("reason") == "Refresh" ) ) {
-					this.fnFindAndSelectNextTaskAfterAction(oEvent);
+					//this.fnFindAndSelectNextTaskAfterAction(oEvent);
 					this.isActionPerformed = false;
+					
 			}
 
 			// If Multiselect is enabled and the list is growing the "Select All" button must be updated:
@@ -3357,7 +3360,8 @@ sap.ui.define([
 			if (oItems && oItems[0] && oItems[0] instanceof GroupHeaderListItem && this._oControlStore.oMasterSearchField.getValue() === "") {
 				this.applySearchPatternBase("");
 			}
-			// End of workaround.
+			// End of workaround.	
+			this.fnSelectFirstItem();
 		},
 
 		/*
@@ -3380,7 +3384,6 @@ sap.ui.define([
 			var iCount = this.applySearchPatternBase(sFilterPattern);
 			var sKey = (iCount > 0 || sFilterPattern == "") ? "view.Workflow.noItemsAvailable" : "view.Workflow.noMatchingItems";
 			var sNoDataText = this.getView().getModel("i18n").getResourceBundle().getText(sKey);
-
 			this.getList().setNoDataText(sNoDataText);
 			this.searchListFlag = 0;
 			if (this.isMultiSelectActive()) {
@@ -3396,7 +3399,6 @@ sap.ui.define([
 				}
 				else {
 					this.oRouter.navTo("detail", this.searchListFirstItem, true);
-
 					var oItem = this.findItemByContextPath("/" + this.searchListFirstItem.contextPath);
 					if (oItem) {
 						this._clearSelection();

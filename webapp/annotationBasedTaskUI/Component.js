@@ -130,8 +130,16 @@ sap.ui.define([
 					BusyIndicator.hide();
 				}
 				//Only for demo purpose
-				if(sap.ui.getCore().byId("__text46") && sap.ui.getCore().byId("__text46").getText() === "DistribuciÃ³n")
-					sap.ui.getCore().byId("__text46").setText("Distribución");
+				var text46 = sap.ui.getCore().byId("__text46");
+				var text45 = sap.ui.getCore().byId("__text45");
+				
+				if (text46 && text46.getText() === "DistribuciÃ³n") {
+					text46.setText("Distribución");
+				}
+
+				if (text45 && text45.getText() === "DistribuciÃ³n") {
+					text45.setText("Distribución");
+				}
 			}.bind(this));
 
 			return this.oViewContainer;
