@@ -1,4 +1,4 @@
-<!--
+<!--<m:Column>
 
     Copyright (C) 2009-2021 SAP SE or an SAP affiliate company. All rights reserved.
 
@@ -27,7 +27,7 @@
 						</template:with>
 					</template:with>
 				</template:with>
-			</m:Table>
+			  </m:Table>
 		</template:if>
 	</template:with>
 </core:FragmentDefinition>

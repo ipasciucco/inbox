@@ -129,17 +129,7 @@ sap.ui.define([
 				} else {
 					BusyIndicator.hide();
 				}
-				//Only for demo purpose
-				var text46 = sap.ui.getCore().byId("__text46");
-				var text45 = sap.ui.getCore().byId("__text45");
-				
-				if (text46 && text46.getText() === "DistribuciÃ³n") {
-					text46.setText("Distribución");
-				}
 
-				if (text45 && text45.getText() === "DistribuciÃ³n") {
-					text45.setText("Distribución");
-				}
 			}.bind(this));
 
 			return this.oViewContainer;
@@ -157,6 +147,8 @@ sap.ui.define([
 				this.oPendingUpdateBinding = oUpdatedComponentData;
 				return;
 			}
+
+			var oFragment = this.byId("tableFragment");
 
 			jQuery.sap.log.debug("[AnnotationBasedTaskUI] updateBinding for " + this.getId() + " started");
 			BusyIndicator.show();
@@ -412,6 +404,8 @@ sap.ui.define([
 			}
 		
 			if (schema.namespace === "C_PURCHASEORDER_FS_SRV") {
+				this._decodeEntityType(schema.entityType[5]);
+				this._decodeEntityType(schema.entityType[6]);
 				this._decodeEntityType(schema.entityType[7]);
 				this._decodeEntityType(schema.entityType[11]);
 				this._decodeEntityType(schema.entityType[14]);
@@ -442,9 +436,14 @@ sap.ui.define([
 		},
 		
 		_decodeProperty: function(property) {
-			if (property["com.sap.vocabularies.Common.v1.Label"] && property["com.sap.vocabularies.Common.v1.Label"].String !== "% dto.pronto pago 1") {
+			if (property["com.sap.vocabularies.Common.v1.Label"] && !property["com.sap.vocabularies.Common.v1.Label"].String.includes("%")) {
 				property["com.sap.vocabularies.Common.v1.Label"].String = this._decodeString(property["com.sap.vocabularies.Common.v1.Label"].String);
 			}
+			
+			if(property["com.sap.vocabularies.Common.v1.Label"] && property["com.sap.vocabularies.Common.v1.Label"].String ==="DistribuciÃ³n (%)")
+				property["com.sap.vocabularies.Common.v1.Label"].String="Distribución (%)"
+			
+
 			if (property["com.sap.vocabularies.Common.v1.QuickInfo"]) {
 				property["com.sap.vocabularies.Common.v1.QuickInfo"].String = this._decodeString(property["com.sap.vocabularies.Common.v1.QuickInfo"].String);
 			}

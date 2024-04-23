@@ -2208,6 +2208,13 @@ sap.ui.define([
 				//notify Multi Select Summary screen
 				this.publishMultiSelectEvent(oEvent.getParameter("selected"), aWorkItem);
 			}
+
+			sap.ui.getCore().getEventBus().publish(
+				"Channel2",
+				"Event2",
+				oEvent.mParameters.listItem.mProperties.title
+			);
+			
 		},
 
 		updateMultiSelectState: function() {

@@ -1,0 +1,57 @@
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1"
+>
+
+ <m:Table visible="{visible>/valorBooleano}" items="{path: 'tablaModel>/items'}"  
+            class="sapUiSmallMarginBottom" fixedLayout="false" growing="true" growingThreshold="50" autoPopinMode="true" contextualWidth="Auto">
+          	<m:headerToolbar>
+					    <m:Toolbar>
+                <m:Title
+                  text="Asignac.cuentas (1)"
+                  level="H2" />
+					    </m:Toolbar>
+				  </m:headerToolbar>
+            <m:columns>
+              <m:Column minScreenWidth="Tablet"
+				demandPopin="true">
+                <m:Text text="Objeto de cos. pri."/>
+              </m:Column>
+            <m:Column minScreenWidth="Tablet"
+				demandPopin="true">
+              <m:Text text="Categoría"/>
+            </m:Column>
+            <m:Column minScreenWidth="Tablet"
+				demandPopin="true">
+              <m:Text text="Cuenta de mayor"/>
+            </m:Column>
+            <m:Column minScreenWidth="Tablet"
+				demandPopin="true">
+              <m:Text text="Distribución"/>
+            </m:Column>
+            <m:Column minScreenWidth="Tablet"
+				demandPopin="true">
+              <m:Text text="Cantidad solicitada"/>
+            </m:Column>
+          </m:columns>
+          <m:items>
+            <m:ColumnListItem>
+              <m:cells>
+                <m:VBox xmlns:m="sap.m">
+                   <m:FormattedText htmlText="&lt;strong>{tablaModel>objetoCosPri}&lt;/strong>" />
+                  <m:Text text="{tablaModel>objetoCosPri2}" />
+                </m:VBox>
+                <m:Text text="{tablaModel>categoria}"/>
+                <m:VBox xmlns:m="sap.m">
+                    <m:FormattedText htmlText="&lt;strong>{tablaModel>cuentaMayor}&lt;/strong>" />
+                    <m:Text text="{tablaModel>cuentaMayor2}" />
+                </m:VBox>
+                <m:Text text="{tablaModel>distribucion}"/>
+                <m:Text text="{tablaModel>cantidadSolicitada}"/>
+            </m:cells>
+            </m:ColumnListItem>
+          </m:items>
+        </m:Table>
+
+</core:FragmentDefinition>

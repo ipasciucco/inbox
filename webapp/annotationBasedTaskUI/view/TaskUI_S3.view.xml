@@ -59,6 +59,7 @@
 					</template:else>
 				</template:if>
 			</template:repeat>
+			<core:Fragment fragmentName="cross.fnd.fiori.inbox.annotationBasedTaskUI.fragments.Table" type="XML"/>
 		</m:content>
 	</m:Page>
 </mvc:View>
